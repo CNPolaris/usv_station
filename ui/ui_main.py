@@ -36,6 +36,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
+        self.toolBar.setMovable(False)
         MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 
         self.retranslateUi(MainWindow)
