@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
+################################################################################
+# Author: tianxin
+# Date: 2023-01-29
+# 主程序
+################################################################################
 import sys
 
 from PySide6.QtGui import QAction
+from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout, QPushButton
 
 from ui.ui_main import Ui_MainWindow
@@ -18,11 +24,11 @@ class Window(QMainWindow):
         self.main_ui.setupUi(self)
         # 添加堆叠布局
         self._qsl = QStackedLayout(self.main_ui.MainWidget)
-        self._home = HomeWidget()
-        self._video = VideoWidget()
+        self.home_ = HomeWidget()
+        self.video_ = VideoWidget()
 
-        self._qsl.addWidget(self._home)
-        self._qsl.addWidget(self._video)
+        self._qsl.addWidget(self.home_)
+        self._qsl.addWidget(self.video_)
         # 工具栏
         self.tb = self.main_ui.toolBar
         self.home_action = QAction('首页', self)  # 0
@@ -50,9 +56,13 @@ class Window(QMainWindow):
 
 def win():
     app = QApplication(sys.argv)
+    channel = QWebChannel()
 
     w = Window()
     w.setWindowTitle("USV地面站v0.1")
+    channel.registerObject('py', w)
+    w.home_.home_form.MapWebView.page().setWebChannel(channel)
+    w.home_.home_form.MapWebView.show()
     w.show()
 
     sys.exit(app.exec())
