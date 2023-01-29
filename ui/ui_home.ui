@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HomeForm</class>
+ <widget class="QWidget" name="HomeForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>540</width>
+    <height>325</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="wind">
+       <property name="maximumSize">
+        <size>
+         <width>129</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>环境风</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="speed">
+       <property name="maximumSize">
+        <size>
+         <width>129</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>航速</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="post">
+       <property name="maximumSize">
+        <size>
+         <width>129</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>姿态</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QWebEngineView" name="MapWebView">
+       <property name="minimumSize">
+        <size>
+         <width>401</width>
+         <height>281</height>
+        </size>
+       </property>
+       <property name="url">
+        <url>
+         <string>about:blank</string>
+        </url>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="maximumSize">
+        <size>
+         <width>113</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>控制指令</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
