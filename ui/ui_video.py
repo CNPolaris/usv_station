@@ -22,7 +22,8 @@ class Ui_VideoForm(object):
     def setupUi(self, VideoForm):
         if not VideoForm.objectName():
             VideoForm.setObjectName(u"VideoForm")
-        VideoForm.resize(538, 326)
+        VideoForm.resize(546, 329)
+        VideoForm.setMinimumSize(QSize(546, 329))
         self.horizontalLayout = QHBoxLayout(VideoForm)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.VideoLabel = QLabel(VideoForm)

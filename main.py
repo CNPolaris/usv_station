@@ -52,6 +52,7 @@ class Window(QMainWindow):
         :return:
         """
         self._qsl.setCurrentIndex(1)
+        self.video_.when_no_video()
 
 
 def win():

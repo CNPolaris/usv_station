@@ -23,7 +23,8 @@ class Ui_HomeForm(object):
     def setupUi(self, HomeForm):
         if not HomeForm.objectName():
             HomeForm.setObjectName(u"HomeForm")
-        HomeForm.resize(540, 325)
+        HomeForm.resize(544, 329)
+        HomeForm.setMinimumSize(QSize(544, 329))
         self.verticalLayout = QVBoxLayout(HomeForm)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
