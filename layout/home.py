@@ -11,7 +11,7 @@ from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtWidgets import QWidget
 
 from ui.ui_home import Ui_HomeForm
-
+from utils.config import config
 
 class HomeWidget(QWidget):
 
@@ -28,5 +28,6 @@ class HomeWidget(QWidget):
         """
         载入地图资源
         """
-        map_path = os.getcwd().replace('\\', '/') + "/templates/baidu.html"
+        map_path = config.get_map_abs_path()
+        print(config.get_map_abs_path())
         self.home_form.MapWebView.load(QtCore.QUrl(map_path))

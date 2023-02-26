@@ -85,6 +85,11 @@ class Config(object):
         """
         absolute_path = self.project_path + relative_path
         return absolute_path
+    
+    def get_map_abs_path(self):
+        """获取百度地图html的绝对路径"""
+        map_path = (self.project_path + "templates{}baidu.html".format(os.sep)).replace(os.sep, '/')
+        return map_path
 
     @staticmethod
     def get_tcp_server_ip() -> str:
@@ -181,6 +186,6 @@ config = Config()
 
 if __name__ == "__main__":
     print(BASE_DIR)
-    print(config.get_all_setting_cfg())
-    config.set_config_data("device", "monitor_key", "test")
+    # print(config.get_all_setting_cfg())
+    # config.set_config_data("device", "monitor_key", "test")
 
