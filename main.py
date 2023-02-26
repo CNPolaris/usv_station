@@ -6,6 +6,7 @@
 ################################################################################
 import sys
 
+from PySide6 import QtCore
 from PySide6.QtGui import QAction
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout, QPushButton
@@ -13,7 +14,7 @@ from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout
 from ui.ui_main import Ui_MainWindow
 from layout.home import HomeWidget
 from layout.video import VideoWidget
-
+from layout.setting import SettingWidget
 
 class Window(QMainWindow):
 
@@ -26,18 +27,24 @@ class Window(QMainWindow):
         self._qsl = QStackedLayout(self.main_ui.MainWidget)
         self.home_ = HomeWidget()
         self.video_ = VideoWidget()
+        self.setting_widget = SettingWidget()
 
         self._qsl.addWidget(self.home_)
         self._qsl.addWidget(self.video_)
+        # self._qsl.addWidget(self.setting_widget)
         # 工具栏
         self.tb = self.main_ui.toolBar
         self.home_action = QAction('首页', self)  # 0
         self.video_action = QAction('监控', self)  # 1
+        self.setting_action = QAction('配置', self)  # 2
+
         # 工具栏动作绑定
         self.home_action.triggered.connect(self.change_qls_to_home)  # 默认首页
         self.video_action.triggered.connect(self.change_qls_to_video)
+        self.setting_action.triggered.connect(self.change_qls_to_setting)
         self.tb.addAction(self.home_action)
         self.tb.addAction(self.video_action)
+        self.tb.addAction(self.setting_action)
 
     def change_qls_to_home(self):
         """
@@ -54,6 +61,12 @@ class Window(QMainWindow):
         self._qsl.setCurrentIndex(1)
         self.video_.when_no_video()
 
+    def change_qls_to_setting(self):
+        """change_qls_to_setting 打开软件配置子窗体
+        """
+        # self._qsl.setCurrentIndex(2)
+        self.setting_widget.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.setting_widget.show()
 
 def win():
     app = QApplication(sys.argv)
