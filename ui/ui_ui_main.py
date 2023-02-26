@@ -22,8 +22,12 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(544, 352)
-        MainWindow.setMinimumSize(QSize(544, 331))
+        MainWindow.resize(544, 388)
+        MainWindow.setMinimumSize(QSize(544, 335))
+        font = QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        MainWindow.setFont(font)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -31,13 +35,14 @@ class Ui_MainWindow(object):
         self.MainWidget = QWidget(self.centralwidget)
         self.MainWidget.setObjectName(u"MainWidget")
         self.MainWidget.setEnabled(True)
-        self.MainWidget.setMinimumSize(QSize(529, 293))
+        self.MainWidget.setMinimumSize(QSize(550, 330))
 
         self.verticalLayout.addWidget(self.MainWidget)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
+        self.toolBar.setFont(font)
         self.toolBar.setMovable(False)
         MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 

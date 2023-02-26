@@ -7,14 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>544</width>
-    <height>352</height>
+    <height>388</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>544</width>
-    <height>331</height>
+    <height>335</height>
    </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>12</pointsize>
+    <bold>false</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -28,8 +34,8 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>529</width>
-        <height>293</height>
+        <width>550</width>
+        <height>330</height>
        </size>
       </property>
      </widget>
@@ -37,6 +43,12 @@
    </layout>
   </widget>
   <widget class="QToolBar" name="toolBar">
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>

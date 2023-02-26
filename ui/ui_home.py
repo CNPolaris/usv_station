@@ -23,8 +23,8 @@ class Ui_HomeForm(object):
     def setupUi(self, HomeForm):
         if not HomeForm.objectName():
             HomeForm.setObjectName(u"HomeForm")
-        HomeForm.resize(544, 329)
-        HomeForm.setMinimumSize(QSize(544, 329))
+        HomeForm.resize(558, 377)
+        HomeForm.setMinimumSize(QSize(530, 300))
         self.verticalLayout = QVBoxLayout(HomeForm)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
@@ -54,7 +54,7 @@ class Ui_HomeForm(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.MapWebView = QWebEngineView(HomeForm)
         self.MapWebView.setObjectName(u"MapWebView")
-        self.MapWebView.setMinimumSize(QSize(401, 281))
+        self.MapWebView.setMinimumSize(QSize(393, 281))
         self.MapWebView.setUrl(QUrl(u"about:blank"))
 
         self.horizontalLayout_2.addWidget(self.MapWebView)
@@ -62,20 +62,31 @@ class Ui_HomeForm(object):
         self.control_box = QGroupBox(HomeForm)
         self.control_box.setObjectName(u"control_box")
         self.control_box.setMinimumSize(QSize(113, 285))
-        self.control_box.setMaximumSize(QSize(113, 16777215))
-        self.horizontalLayout_3 = QHBoxLayout(self.control_box)
+        self.control_box.setMaximumSize(QSize(200, 16777215))
+        self.verticalLayout_4 = QVBoxLayout(self.control_box)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.process_widget = QWidget(self.control_box)
+        self.process_widget.setObjectName(u"process_widget")
+        self.process_widget.setMinimumSize(QSize(95, 71))
+        self.process_layout = QHBoxLayout(self.process_widget)
+        self.process_layout.setObjectName(u"process_layout")
+
+        self.verticalLayout_4.addWidget(self.process_widget)
+
+        self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalSlider = QSlider(self.control_box)
-        self.verticalSlider.setObjectName(u"verticalSlider")
-        self.verticalSlider.setMinimumSize(QSize(22, 197))
-        self.verticalSlider.setOrientation(Qt.Vertical)
+        self.left_slider = QSlider(self.control_box)
+        self.left_slider.setObjectName(u"left_slider")
+        self.left_slider.setMinimumSize(QSize(41, 160))
+        self.left_slider.setOrientation(Qt.Vertical)
 
-        self.verticalLayout_2.addWidget(self.verticalSlider)
+        self.verticalLayout_2.addWidget(self.left_slider)
 
         self.label = QLabel(self.control_box)
         self.label.setObjectName(u"label")
+        self.label.setMinimumSize(QSize(41, 0))
 
         self.verticalLayout_2.addWidget(self.label)
 
@@ -84,20 +95,24 @@ class Ui_HomeForm(object):
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalSlider_2 = QSlider(self.control_box)
-        self.verticalSlider_2.setObjectName(u"verticalSlider_2")
-        self.verticalSlider_2.setMinimumSize(QSize(22, 197))
-        self.verticalSlider_2.setOrientation(Qt.Vertical)
+        self.right_slider = QSlider(self.control_box)
+        self.right_slider.setObjectName(u"right_slider")
+        self.right_slider.setMinimumSize(QSize(41, 160))
+        self.right_slider.setOrientation(Qt.Vertical)
 
-        self.verticalLayout_3.addWidget(self.verticalSlider_2)
+        self.verticalLayout_3.addWidget(self.right_slider)
 
         self.label_2 = QLabel(self.control_box)
         self.label_2.setObjectName(u"label_2")
+        self.label_2.setMinimumSize(QSize(41, 0))
 
         self.verticalLayout_3.addWidget(self.label_2)
 
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_3)
+
+
+        self.verticalLayout_4.addLayout(self.horizontalLayout_3)
 
 
         self.horizontalLayout_2.addWidget(self.control_box)

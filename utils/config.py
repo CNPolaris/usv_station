@@ -28,7 +28,6 @@ class Config(object):
         # 配置文件路径
         self._config_path = self.project_path + "setup.cfg"
         self._config_copy_path = self.project_path + "setup_copy.cfg"
-        print(self._config_path)
         self.config_parser = RawConfigParser()
         self.config_parser.read(self._config_path, 'utf-8')  # 读取配置文件所有信息
 
@@ -184,8 +183,8 @@ class Config(object):
 
 config = Config()
 
-if __name__ == "__main__":
-    print(BASE_DIR)
+# if __name__ == "__main__":
+    # print(BASE_DIR)
     # print(config.get_all_setting_cfg())
     # config.set_config_data("device", "monitor_key", "test")
 
