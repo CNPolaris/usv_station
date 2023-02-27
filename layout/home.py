@@ -34,7 +34,7 @@ class ConnectProcessWidget(QWidget):
         process = CircleProgressBar(color=QColor(255, 0, 0), clockwise=False)
         layout.addWidget(process)
         self.setLayout(layout)
-        
+
 class HomeWidget(QWidget):
 
     def __init__(self):
@@ -102,7 +102,7 @@ class HomeWidget(QWidget):
         """连接服务器进度动画"""
         if flag == 1:
             self.connect_process_widget.close()
-            reply = showMessage(self, "服务连接", "连接成功", QMessageBox.Yes)
+            reply = QMessageBox.information(self, "服务连接", "连接成功", QMessageBox.Yes)
         else:
             reply = showMessage(self, "服务连接", "连接失败", QMessageBox.Yes)
             self.command_thread.quit()
