@@ -146,6 +146,12 @@ class Config(object):
         return access_key
     
     @staticmethod
+    def get_connect_key(s="command"):
+        """获取地面站连接密钥"""
+        connect_key = config.get_config_data(s, section="connect") + '&' + config.get_config_data("gateway_key", section="device")
+        return connect_key
+    
+    @staticmethod
     def get_monitor_key():
         """获取推流码"""
         monitor_code = config.get_config_data("monitor_key", section="device")

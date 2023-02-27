@@ -15,6 +15,7 @@ from ui.ui_main import Ui_MainWindow
 from layout.home import HomeWidget
 from layout.video import VideoWidget
 from layout.setting import SettingWidget
+from threads.command_thread import CommandThread
 
 class Window(QMainWindow):
 
@@ -45,7 +46,7 @@ class Window(QMainWindow):
         self.tb.addAction(self.home_action)
         self.tb.addAction(self.video_action)
         self.tb.addAction(self.setting_action)
-
+        
     def change_qls_to_home(self):
         """
         切换首页

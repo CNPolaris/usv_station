@@ -10,249 +10,31 @@ from PySide6 import QtCore
 from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF, QTimer
 from PySide6.QtGui import QColor, QPainter, QFont, QIcon
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSlider
+from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSlider, QLabel, QMessageBox
+
 from ui.ui_home import Ui_HomeForm
 from utils.config import config
+from threads.command_thread import CommandThread
+from components.CircleProgressBar import CircleProgressBar
+from components.PercentProgressBar import PercentProgressBar
 
+showMessage = QMessageBox.question
 
-class PercentProgressBar(QWidget):
-    MinValue = 0
-    MaxValue = 100
-    Value = 0
-    BorderWidth = 8
-    Clockwise = True  # 顺时针还是逆时针
-    ShowPercent = True  # 是否显示百分比
-    ShowFreeArea = False  # 显示背后剩余
-    ShowSmallCircle = False  # 显示带头的小圆圈
-    TextColor = QColor(255, 255, 255)  # 文字颜色
-    BorderColor = QColor(24, 189, 155)  # 边框圆圈颜色
-    BackgroundColor = QColor(70, 70, 70)  # 背景颜色
-
-    def __init__(self, *args, value=0, minValue=0, maxValue=100,
-                 borderWidth=8, clockwise=True, showPercent=True,
-                 showFreeArea=False, showSmallCircle=False,
-                 textColor=QColor(255, 255, 255),
-                 borderColor=QColor(24, 189, 155),
-                 backgroundColor=QColor(70, 70, 70), **kwargs):
-        super(PercentProgressBar, self).__init__(*args, **kwargs)
-        self.Value = value
-        self.MinValue = minValue
-        self.MaxValue = maxValue
-        self.BorderWidth = borderWidth
-        self.Clockwise = clockwise
-        self.ShowPercent = showPercent
-        self.ShowFreeArea = showFreeArea
-        self.ShowSmallCircle = showSmallCircle
-        self.TextColor = textColor
-        self.BorderColor = borderColor
-        self.BackgroundColor = backgroundColor
-
-    def setRange(self, minValue: int, maxValue: int):
-        if minValue >= maxValue:  # 最小值>=最大值
-            return
-        self.MinValue = minValue
-        self.MaxValue = maxValue
-        self.update()
-
-    def paintEvent(self, event):
-        super(PercentProgressBar, self).paintEvent(event)
-        width = self.width()
-        height = self.height()
-        side = min(width, height)
-
-        painter = QPainter(self)
-        # 反锯齿
-        painter.setRenderHints(QPainter.Antialiasing |
-                               QPainter.TextAntialiasing)
-        # 坐标中心为中间点
-        painter.translate(width / 2, height / 2)
-        # 按照100x100缩放
-        painter.scale(side / 100.0, side / 100.0)
-
-        # 绘制中心园
-        self._drawCircle(painter, 50)
-        # 绘制圆弧
-        self._drawArc(painter, 50 - self.BorderWidth / 2)
-        # 绘制文字
-        self._drawText(painter, 50)
-
-    def _drawCircle(self, painter: QPainter, radius: int):
-        # 绘制中心园
-        radius = radius - self.BorderWidth
-        painter.save()
-        painter.setPen(Qt.NoPen)
-        painter.setBrush(self.BackgroundColor)
-        painter.drawEllipse(QRectF(-radius, -radius, radius * 2, radius * 2))
-        painter.restore()
-
-    def _drawArc(self, painter: QPainter, radius: int):
-        # 绘制圆弧
-        painter.save()
-        painter.setBrush(Qt.NoBrush)
-        # 修改画笔
-        pen = painter.pen()
-        pen.setWidthF(self.BorderWidth)
-        pen.setCapStyle(Qt.RoundCap)
-
-        arcLength = 360.0 / (self.MaxValue - self.MinValue) * self.Value
-        rect = QRectF(-radius, -radius, radius * 2, radius * 2)
-
-        if not self.Clockwise:
-            # 逆时针
-            arcLength = -arcLength
-
-        # 绘制剩余进度圆弧
-        if self.ShowFreeArea:
-            acolor = self.BorderColor.toRgb()
-            acolor.setAlphaF(0.2)
-            pen.setColor(acolor)
-            painter.setPen(pen)
-            painter.drawArc(rect, (0 - arcLength) *
-                            16, -(360 - arcLength) * 16)
-
-        # 绘制当前进度圆弧
-        pen.setColor(self.BorderColor)
-        painter.setPen(pen)
-        painter.drawArc(rect, 0, -arcLength * 16)
-
-        # 绘制进度圆弧前面的小圆
-        if self.ShowSmallCircle:
-            offset = radius - self.BorderWidth + 1
-            radius = self.BorderWidth / 2 - 1
-            painter.rotate(-90)
-            circleRect = QRectF(-radius, radius + offset,
-                                radius * 2, radius * 2)
-            painter.rotate(arcLength)
-            painter.drawEllipse(circleRect)
-
-        painter.restore()
-
-    def _drawText(self, painter: QPainter, radius: int):
-        # 绘制文字
-        painter.save()
-        painter.setPen(self.TextColor)
-        painter.setFont(QFont('Arial', 25))
-        strValue = '{}%'.format(int(self.Value / (self.MaxValue - self.MinValue)
-                                    * 100)) if self.ShowPercent else str(self.Value)
-        painter.drawText(QRectF(-radius, -radius, radius * 2,
-                                radius * 2), Qt.AlignCenter, strValue)
-        painter.restore()
-
-    @pyqtProperty(int)
-    def minValue(self) -> int:
-        return self.MinValue
-
-    @minValue.setter
-    def minValue(self, minValue: int):
-        if self.MinValue != minValue:
-            self.MinValue = minValue
-            self.update()
-
-    @pyqtProperty(int)
-    def maxValue(self) -> int:
-        return self.MaxValue
-
-    @maxValue.setter
-    def maxValue(self, maxValue: int):
-        if self.MaxValue != maxValue:
-            self.MaxValue = maxValue
-            self.update()
-
-    @pyqtProperty(int)
-    def value(self) -> int:
-        return self.Value
-
-    @value.setter
-    def value(self, value: int):
-        if self.Value != value:
-            self.Value = value
-            self.update()
-
-    @pyqtProperty(float)
-    def borderWidth(self) -> float:
-        return self.BorderWidth
-
-    @borderWidth.setter
-    def borderWidth(self, borderWidth: float):
-        if self.BorderWidth != borderWidth:
-            self.BorderWidth = borderWidth
-            self.update()
-
-    @pyqtProperty(bool)
-    def clockwise(self) -> bool:
-        return self.Clockwise
-
-    @clockwise.setter
-    def clockwise(self, clockwise: bool):
-        if self.Clockwise != clockwise:
-            self.Clockwise = clockwise
-            self.update()
-
-    @pyqtProperty(bool)
-    def showPercent(self) -> bool:
-        return self.ShowPercent
-
-    @showPercent.setter
-    def showPercent(self, showPercent: bool):
-        if self.ShowPercent != showPercent:
-            self.ShowPercent = showPercent
-            self.update()
-
-    @pyqtProperty(bool)
-    def showFreeArea(self) -> bool:
-        return self.ShowFreeArea
-
-    @showFreeArea.setter
-    def showFreeArea(self, showFreeArea: bool):
-        if self.ShowFreeArea != showFreeArea:
-            self.ShowFreeArea = showFreeArea
-            self.update()
-
-    @pyqtProperty(bool)
-    def showSmallCircle(self) -> bool:
-        return self.ShowSmallCircle
-
-    @showSmallCircle.setter
-    def showSmallCircle(self, showSmallCircle: bool):
-        if self.ShowSmallCircle != showSmallCircle:
-            self.ShowSmallCircle = showSmallCircle
-            self.update()
-
-    @pyqtProperty(QColor)
-    def textColor(self) -> QColor:
-        return self.TextColor
-
-    @textColor.setter
-    def textColor(self, textColor: QColor):
-        if self.TextColor != textColor:
-            self.TextColor = textColor
-            self.update()
-
-    @pyqtProperty(QColor)
-    def borderColor(self) -> QColor:
-        return self.BorderColor
-
-    @borderColor.setter
-    def borderColor(self, borderColor: QColor):
-        if self.BorderColor != borderColor:
-            self.BorderColor = borderColor
-            self.update()
-
-    @pyqtProperty(QColor)
-    def backgroundColor(self) -> QColor:
-        return self.BackgroundColor
-
-    @backgroundColor.setter
-    def backgroundColor(self, backgroundColor: QColor):
-        if self.BackgroundColor != backgroundColor:
-            self.BackgroundColor = backgroundColor
-            self.update()
-
-    def setValue(self, value):
-        self.value = value
-
-    def sizeHint(self) -> QSize:
-        return QSize(100, 100)
+class ConnectProcessWidget(QWidget):
+    def __init__(self) -> None:
+        super().__init__()
+        self.setWindowTitle("服务器连接")
+        self.setWindowFlags(QtCore.Qt.WindowCloseButtonHint)
+        self.setMaximumSize(300, 200)
+        self.resize(300, 200)
+        layout = QVBoxLayout()
+        label = QLabel("")
+        label.setText("正在连接服务器....")
+        layout.addWidget(label)
+        process = CircleProgressBar(color=QColor(255, 0, 0), clockwise=False)
+        layout.addWidget(process)
+        self.setLayout(layout)
+        
 class HomeWidget(QWidget):
 
     def __init__(self):
@@ -285,6 +67,13 @@ class HomeWidget(QWidget):
         self.is_connect = True  # 状态变量 False时未连接 True时已经连接
         self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
         self.home_form.connect_tcp_btn.clicked.connect(self.on_connect_tcp_btn_clicked)
+        # 连接服务器进度条组件
+        self.connect_process_widget = ConnectProcessWidget()
+        # 子线程初始化
+        self.command_thread = CommandThread()
+        
+        # 子线程向主线程通信
+        self.command_thread.send_connect_flag_signal.connect(self.connect_process_bar)  # 绑定连接状态信号量
         
     def load_map(self):
         """
@@ -299,7 +88,21 @@ class HomeWidget(QWidget):
             self.home_form.connect_tcp_btn.setText("结束连接")
             self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("stop")))
             self.is_connect = False
+            self.command_thread.start()
+            # 进度条
+            self.connect_process_widget.setWindowModality(QtCore.Qt.ApplicationModal)
+            self.connect_process_widget.show()
         else:
             self.home_form.connect_tcp_btn.setText("打开连接")
             self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
             self.is_connect = True
+            self.command_thread.quit()
+    
+    def connect_process_bar(self, flag):
+        """连接服务器进度动画"""
+        if flag == 1:
+            self.connect_process_widget.close()
+            reply = showMessage(self, "服务连接", "连接成功", QMessageBox.Yes)
+        else:
+            reply = showMessage(self, "服务连接", "连接失败", QMessageBox.Yes)
+            self.command_thread.quit()
