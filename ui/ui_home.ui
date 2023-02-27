@@ -99,6 +99,19 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
+         <widget class="QPushButton" name="connect_tcp_btn">
+          <property name="minimumSize">
+           <size>
+            <width>95</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>打开连接</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QWidget" name="process_widget" native="true">
           <property name="minimumSize">
            <size>

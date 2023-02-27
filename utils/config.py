@@ -89,7 +89,12 @@ class Config(object):
         """获取百度地图html的绝对路径"""
         map_path = (self.project_path + "templates{}baidu.html".format(os.sep)).replace(os.sep, '/')
         return map_path
-
+    
+    def get_static_img_abs_path(self, img):
+        """获取静态图片的绝对路径"""
+        img_path = (self.project_path + f"static{os.sep}img{os.sep}{img}.png").replace(os.sep, "/")
+        return img_path
+    
     @staticmethod
     def get_tcp_server_ip() -> str:
         """get_server_ip 获取配置文件中的监听ip

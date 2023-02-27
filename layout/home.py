@@ -9,7 +9,7 @@ import os
 from PySide6 import QtCore
 from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF, QTimer
-from PySide6.QtGui import QColor, QPainter, QFont
+from PySide6.QtGui import QColor, QPainter, QFont, QIcon
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSlider
 from ui.ui_home import Ui_HomeForm
 from utils.config import config
@@ -281,10 +281,25 @@ class HomeWidget(QWidget):
         self.home_form.right_slider.setMaximum(100)
         self.home_form.left_slider.valueChanged.connect(self.left_staticPercentProgressBar.setValue)
         self.home_form.right_slider.valueChanged.connect(self.right_staticPercentProgressBar.setValue)
-
+        # 连接tcp服务器设置
+        self.is_connect = True  # 状态变量 False时未连接 True时已经连接
+        self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
+        self.home_form.connect_tcp_btn.clicked.connect(self.on_connect_tcp_btn_clicked)
+        
     def load_map(self):
         """
         载入地图资源
         """
         map_path = config.get_map_abs_path()
         self.home_form.MapWebView.load(QtCore.QUrl(map_path))
+        
+    def on_connect_tcp_btn_clicked(self):
+        """连接TCP服务器"""
+        if self.is_connect:
+            self.home_form.connect_tcp_btn.setText("结束连接")
+            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("stop")))
+            self.is_connect = False
+        else:
+            self.home_form.connect_tcp_btn.setText("打开连接")
+            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
+            self.is_connect = True

@@ -17,7 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QLabel,
-    QSizePolicy, QSlider, QVBoxLayout, QWidget)
+    QPushButton, QSizePolicy, QSlider, QVBoxLayout,
+    QWidget)
 
 class Ui_HomeForm(object):
     def setupUi(self, HomeForm):
@@ -65,6 +66,12 @@ class Ui_HomeForm(object):
         self.control_box.setMaximumSize(QSize(200, 16777215))
         self.verticalLayout_4 = QVBoxLayout(self.control_box)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.connect_tcp_btn = QPushButton(self.control_box)
+        self.connect_tcp_btn.setObjectName(u"connect_tcp_btn")
+        self.connect_tcp_btn.setMinimumSize(QSize(95, 24))
+
+        self.verticalLayout_4.addWidget(self.connect_tcp_btn)
+
         self.process_widget = QWidget(self.control_box)
         self.process_widget.setObjectName(u"process_widget")
         self.process_widget.setMinimumSize(QSize(95, 71))
@@ -132,6 +139,7 @@ class Ui_HomeForm(object):
         self.speed.setText(QCoreApplication.translate("HomeForm", u"\u822a\u901f", None))
         self.post.setText(QCoreApplication.translate("HomeForm", u"\u59ff\u6001", None))
         self.control_box.setTitle(QCoreApplication.translate("HomeForm", u"\u63a7\u5236\u6a21\u5757", None))
+        self.connect_tcp_btn.setText(QCoreApplication.translate("HomeForm", u"\u6253\u5f00\u8fde\u63a5", None))
         self.label.setText(QCoreApplication.translate("HomeForm", u"\u5de6\u6cb9\u95e8", None))
         self.label_2.setText(QCoreApplication.translate("HomeForm", u"\u53f3\u6cb9\u95e8", None))
     # retranslateUi
