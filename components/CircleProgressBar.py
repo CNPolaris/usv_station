@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+__author__ = "tian.xin"
+
 from PySide6 import QtCore
 from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF, QTimer
