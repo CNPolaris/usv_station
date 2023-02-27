@@ -7,9 +7,9 @@
 import sys
 
 from PySide6 import QtCore
-from PySide6.QtGui import QAction
+from PySide6.QtGui import QAction, QCloseEvent
 from PySide6.QtWebChannel import QWebChannel
-from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout, QPushButton
+from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout, QPushButton, QMessageBox
 
 from ui.ui_main import Ui_MainWindow
 from layout.home import HomeWidget
@@ -65,9 +65,15 @@ class Window(QMainWindow):
     def change_qls_to_setting(self):
         """change_qls_to_setting 打开软件配置子窗体
         """
-        # self._qsl.setCurrentIndex(2)
         self.setting_widget.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setting_widget.show()
+    
+    def closeEvent(self, event: QCloseEvent) -> None:
+        reply = QMessageBox.question(self, '警告', "系统将退出，是否确认?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 def win():
     app = QApplication(sys.argv)
