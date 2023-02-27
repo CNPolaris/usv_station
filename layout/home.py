@@ -15,6 +15,7 @@ from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, Q
 from ui.ui_home import Ui_HomeForm
 from utils.config import config
 from threads.command_thread import CommandThread
+from threads.station_thread import StationThread
 from components.CircleProgressBar import CircleProgressBar
 from components.PercentProgressBar import PercentProgressBar
 
@@ -86,6 +87,7 @@ class HomeWidget(QWidget):
         # 子线程
         ##################################
         self.command_thread = CommandThread()
+        self.station_thread = StationThread()
         # 子线程向主线程通信
         self.command_thread.send_connect_flag_signal.connect(self.connect_process_bar)  # 绑定连接状态信号量
         # 主线程向子线程通信
@@ -106,6 +108,7 @@ class HomeWidget(QWidget):
             self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("stop")))
             self.is_connect = False
             self.command_thread.start()
+            self.station_thread.start()
             # 进度条
             self.connect_process_widget.setWindowModality(QtCore.Qt.ApplicationModal)
             self.connect_process_widget.show()

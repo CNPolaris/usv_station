@@ -7,7 +7,6 @@
 import socket
 import struct
 import json
-import subprocess
 
 from PySide6 import QtCore
 

@@ -24,8 +24,8 @@ class Ui_HomeForm(object):
     def setupUi(self, HomeForm):
         if not HomeForm.objectName():
             HomeForm.setObjectName(u"HomeForm")
-        HomeForm.resize(558, 377)
-        HomeForm.setMinimumSize(QSize(530, 300))
+        HomeForm.resize(555, 400)
+        HomeForm.setMinimumSize(QSize(555, 400))
         self.verticalLayout = QVBoxLayout(HomeForm)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
@@ -82,8 +82,10 @@ class Ui_HomeForm(object):
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(13, -1, -1, -1)
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(7, -1, -1, -1)
         self.left_slider = QSlider(self.control_box)
         self.left_slider.setObjectName(u"left_slider")
         self.left_slider.setMinimumSize(QSize(41, 160))
@@ -102,6 +104,7 @@ class Ui_HomeForm(object):
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(7, -1, -1, -1)
         self.right_slider = QSlider(self.control_box)
         self.right_slider.setObjectName(u"right_slider")
         self.right_slider.setMinimumSize(QSize(41, 160))

@@ -22,20 +22,21 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(544, 388)
-        MainWindow.setMinimumSize(QSize(544, 335))
+        MainWindow.resize(600, 430)
+        MainWindow.setMinimumSize(QSize(600, 430))
         font = QFont()
         font.setPointSize(12)
         font.setBold(False)
         MainWindow.setFont(font)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.centralwidget.setMinimumSize(QSize(600, 400))
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.MainWidget = QWidget(self.centralwidget)
         self.MainWidget.setObjectName(u"MainWidget")
         self.MainWidget.setEnabled(True)
-        self.MainWidget.setMinimumSize(QSize(550, 330))
+        self.MainWidget.setMinimumSize(QSize(600, 400))
 
         self.verticalLayout.addWidget(self.MainWidget)
 
