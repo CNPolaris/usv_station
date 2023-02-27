@@ -104,27 +104,29 @@ class HomeWidget(QWidget):
     def on_connect_tcp_btn_clicked(self):
         """连接TCP服务器"""
         if self.is_connect:
-            self.home_form.connect_tcp_btn.setText("结束连接")
-            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("stop")))
-            self.is_connect = False
             self.command_thread.start()
             self.station_thread.start()
             # 进度条
             self.connect_process_widget.setWindowModality(QtCore.Qt.ApplicationModal)
             self.connect_process_widget.show()
         else:
-            self.home_form.connect_tcp_btn.setText("打开连接")
-            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
             self.is_connect = True
             self.command_thread.destroy()
+            self.station_thread.destroy()
     
     def connect_process_bar(self, flag):
         """连接服务器进度动画"""
         if flag == 1:  # 连接服务器成功
+            self.home_form.connect_tcp_btn.setText("结束连接")
+            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("stop")))
+            self.is_connect = False
             self.connect_process_widget.close()
             self.home_form.left_slider.setDisabled(False)
             self.home_form.right_slider.setDisabled(False)
             reply = QMessageBox.information(self, "服务连接", "连接成功", QMessageBox.Yes)
         else:
-            reply = showMessage(self, "服务连接", "连接失败", QMessageBox.Yes)
+            self.home_form.connect_tcp_btn.setText("打开连接")
+            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
+            self.connect_process_widget.close()
+            reply = QMessageBox.warning(self, "服务连接", "连接失败", QMessageBox.Yes)
             self.command_thread.quit()

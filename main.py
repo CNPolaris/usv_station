@@ -7,7 +7,7 @@
 import sys
 
 from PySide6 import QtCore
-from PySide6.QtGui import QAction, QCloseEvent
+from PySide6.QtGui import QAction, QCloseEvent, QIcon, QPixmap
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout, QPushButton, QMessageBox
 
@@ -69,7 +69,7 @@ class Window(QMainWindow):
         self.setting_widget.show()
     
     def closeEvent(self, event: QCloseEvent) -> None:
-        reply = QMessageBox.question(self, '警告', "系统将退出，是否确认?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        reply = QMessageBox.warning(self, '警告', "系统将退出，是否确认?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             event.accept()
         else:
@@ -80,7 +80,10 @@ def win():
     channel = QWebChannel()
 
     w = Window()
-    w.setWindowTitle("USV地面站v0.1")
+    w.setWindowTitle("USV地面站软件v0.1")
+    icon = QIcon()
+    icon.addPixmap(QPixmap("static/img/logo.ico"),QIcon.Normal, QIcon.Off)
+    w.setWindowIcon(icon)
     channel.registerObject('py', w)
     w.home_.home_form.MapWebView.page().setWebChannel(channel)
     w.home_.home_form.MapWebView.show()

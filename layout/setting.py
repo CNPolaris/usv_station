@@ -15,7 +15,7 @@ class SettingWidget(QWidget):
     super().__init__()
     self.setting_form = Ui_SettingForm()
     self.setting_form.setupUi(self)
-    
+    self.setWindowTitle("系统配置")
     self.load_setting_cfg()
     # 配置信息复选框选中事件绑定
     self.setting_form.override_server_info.stateChanged.connect(lambda: self.on_check_override_server_info(self.setting_form.override_server_info))
@@ -26,6 +26,7 @@ class SettingWidget(QWidget):
     self.setting_form.reset_cfg_btn.clicked.connect(self.on_reset_btn_clicked)
     self.setting_form.save_cfg_btn.clicked.connect(self.on_save_btn_clicked)
     self.setting_form.cancel_cfg_btn.clicked.connect(self.on_cancel_btn_clicked)
+    
   def load_setting_cfg(self):
     """load_setting_cfg 载入setting.cfg配置文件
     """
