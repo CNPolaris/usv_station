@@ -19,6 +19,8 @@ from threads.station_thread import StationThread
 from components.CircleProgressBar import CircleProgressBar
 from components.PercentProgressBar import PercentProgressBar
 from components.SpeedProgressBar import SpeedProgressBar
+from components.PostPlane import PostPlane
+
 
 showMessage = QMessageBox.question
 
@@ -59,6 +61,10 @@ class HomeWidget(QWidget):
         self.speed_bar = SpeedProgressBar(self)
         speed_layout.addWidget(self.speed_bar)
         self.home_form.speed_widget.setLayout(speed_layout)
+        plane_layout = QHBoxLayout()
+        self.plane = PostPlane(self)
+        plane_layout.addWidget(self.plane)
+        self.home_form.post_widget.setLayout(plane_layout)
         ############################
         # 油门进度条
         ############################

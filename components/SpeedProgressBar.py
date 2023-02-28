@@ -76,7 +76,7 @@ class SpeedProgressBar(QWidget):
     painter.drawArc(rect, (270 - self.StartAngle - angleCurrent - angleOther) * 16, angleOther *16)
     # 绘制里面圆弧
     radius = 90
-    rect = QRectF(-radius, -radius, radius* 2, radius * 2)
+    rect = QRectF(-radius, -radius, radius * 2, radius * 2)
     painter.drawArc(rect, (270 - self.StartAngle - angleCurrent) * 16, angleCurrent * 16)
     painter.drawArc(rect, (270 - self.StartAngle - angleCurrent - angleOther) * 16, angleOther *16)
     painter.restore()
@@ -86,7 +86,7 @@ class SpeedProgressBar(QWidget):
     painter.save()
     
     radius = 68
-    painter.setPen(QtCore.Qt.NoPen)
+    painter.setPen(QtCore.Qt.PenStyle.NoPen)
     painter.setBrush(self.PointerColor)
     
     pts = QPolygon()
