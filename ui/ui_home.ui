@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
-    <height>400</height>
+    <width>847</width>
+    <height>447</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -21,56 +21,49 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="wind">
-       <property name="maximumSize">
-        <size>
-         <width>129</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>环境风</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="speed">
-       <property name="maximumSize">
-        <size>
-         <width>129</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>航速</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="post">
-       <property name="maximumSize">
-        <size>
-         <width>129</width>
-         <height>50</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>姿态</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QWidget" name="speed_widget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>160</width>
+           <height>160</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="post_widget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>120</width>
+           <height>120</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>160</width>
+           <height>160</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
      <item>
       <widget class="QWebEngineView" name="MapWebView">
        <property name="minimumSize">
         <size>
-         <width>393</width>
-         <height>281</height>
+         <width>455</width>
+         <height>427</height>
         </size>
        </property>
        <property name="url">
@@ -84,8 +77,8 @@
       <widget class="QGroupBox" name="control_box">
        <property name="minimumSize">
         <size>
-         <width>113</width>
-         <height>285</height>
+         <width>200</width>
+         <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -97,7 +90,7 @@
        <property name="title">
         <string>控制模块</string>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
          <widget class="QPushButton" name="connect_tcp_btn">
           <property name="minimumSize">
@@ -124,19 +117,51 @@
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="leftMargin">
-           <number>13</number>
-          </property>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QSlider" name="left_side_slider">
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>160</height>
+               </size>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="maximumSize">
+               <size>
+                <width>38</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>左侧推</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <property name="leftMargin">
-             <number>7</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QSlider" name="left_slider">
               <property name="minimumSize">
                <size>
-                <width>41</width>
+                <width>40</width>
                 <height>160</height>
                </size>
               </property>
@@ -153,8 +178,19 @@
                 <height>0</height>
                </size>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>41</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
               <property name="text">
-               <string>左油门</string>
+               <string>左推进</string>
               </property>
              </widget>
             </item>
@@ -163,13 +199,13 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <property name="leftMargin">
-             <number>7</number>
+             <number>1</number>
             </property>
             <item>
              <widget class="QSlider" name="right_slider">
               <property name="minimumSize">
                <size>
-                <width>41</width>
+                <width>40</width>
                 <height>160</height>
                </size>
               </property>
@@ -186,8 +222,54 @@
                 <height>0</height>
                </size>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>41</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
               <property name="text">
-               <string>右油门</string>
+               <string>右推进</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QSlider" name="right_side_slider">
+              <property name="minimumSize">
+               <size>
+                <width>40</width>
+                <height>160</height>
+               </size>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="maximumSize">
+               <size>
+                <width>38</width>
+                <height>17</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>右侧推</string>
               </property>
              </widget>
             </item>

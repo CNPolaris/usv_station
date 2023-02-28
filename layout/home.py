@@ -18,6 +18,7 @@ from threads.command_thread import CommandThread
 from threads.station_thread import StationThread
 from components.CircleProgressBar import CircleProgressBar
 from components.PercentProgressBar import PercentProgressBar
+from components.SpeedProgressBar import SpeedProgressBar
 
 showMessage = QMessageBox.question
 
@@ -52,17 +53,44 @@ class HomeWidget(QWidget):
         self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.LocalStorageEnabled, True)
         self.load_map()
         ############################
+        # 航速姿态等组件
+        ############################
+        speed_layout  = QHBoxLayout()
+        self.speed_bar = SpeedProgressBar(self)
+        speed_layout.addWidget(self.speed_bar)
+        self.home_form.speed_widget.setLayout(speed_layout)
+        ############################
         # 油门进度条
         ############################
         layout = QHBoxLayout(self)
+        # 主推进器
         self.left_staticPercentProgressBar = PercentProgressBar(self)
         self.left_staticPercentProgressBar.showFreeArea = True
         self.left_staticPercentProgressBar.ShowSmallCircle = True
-        layout.addWidget(self.left_staticPercentProgressBar)
         self.right_staticPercentProgressBar = PercentProgressBar(self)
         self.right_staticPercentProgressBar.showFreeArea = True
         self.right_staticPercentProgressBar.ShowSmallCircle = True
+        
+        # 侧推进器
+        self.left_side_percent = PercentProgressBar(self,  styleSheet="""
+            qproperty-textColor: rgb(255, 0, 0);
+            qproperty-borderColor: rgb(0, 255, 0);
+            qproperty-backgroundColor: rgb(240,255,240);
+        """)
+        self.left_side_percent.showFreeArea = True
+        self.left_side_percent.ShowSmallCircle = True
+        self.right_side_percent = PercentProgressBar(self,  styleSheet="""
+            qproperty-textColor: rgb(255, 0, 0);
+            qproperty-borderColor: rgb(0, 255, 0);
+            qproperty-backgroundColor: rgb(240,255,240);
+        """)
+        self.right_side_percent.showFreeArea = True
+        self.right_side_percent.ShowSmallCircle = True
+        # 加入布局
+        layout.addWidget(self.left_side_percent)
+        layout.addWidget(self.left_staticPercentProgressBar)
         layout.addWidget(self.right_staticPercentProgressBar)
+        layout.addWidget(self.right_side_percent)
         self.home_form.process_layout.addLayout(layout)
         # slider设置最大值最小值，启动时锁死，直到建立连接后解锁
         self.home_form.left_slider.setMinimum(0)
@@ -71,9 +99,17 @@ class HomeWidget(QWidget):
         self.home_form.right_slider.setMaximum(100)
         self.home_form.left_slider.setDisabled(True)
         self.home_form.right_slider.setDisabled(True)
+        self.home_form.left_side_slider.setMinimum(0)
+        self.home_form.left_side_slider.setMaximum(100)
+        self.home_form.left_side_slider.setDisabled(True)
+        self.home_form.right_side_slider.setMinimum(0)
+        self.home_form.right_side_slider.setMaximum(100)
+        self.home_form.right_side_slider.setDisabled(True)
         # slider数据变化事件
         self.home_form.left_slider.valueChanged.connect(self.left_staticPercentProgressBar.setValue)
         self.home_form.right_slider.valueChanged.connect(self.right_staticPercentProgressBar.setValue)
+        self.home_form.left_side_slider.valueChanged.connect(self.left_side_percent.setValue)
+        self.home_form.right_side_slider.valueChanged.connect(self.right_side_percent.setValue)
         self.home_form.left_slider.valueChanged.connect(self.left_signal.emit)
         self.home_form.right_slider.valueChanged.connect(self.right_signal.emit)
         ############################
@@ -113,6 +149,11 @@ class HomeWidget(QWidget):
             self.is_connect = True
             self.command_thread.destroy()
             self.station_thread.destroy()
+            # 断开连接后 锁死 避免出错
+            self.home_form.left_slider.setDisabled(True)
+            self.home_form.right_slider.setDisabled(True)
+            self.home_form.left_side_slider.setDisabled(True)
+            self.home_form.right_side_slider.setDisabled(True)
     
     def connect_process_bar(self, flag):
         """连接服务器进度动画"""
@@ -123,6 +164,8 @@ class HomeWidget(QWidget):
             self.connect_process_widget.close()
             self.home_form.left_slider.setDisabled(False)
             self.home_form.right_slider.setDisabled(False)
+            self.home_form.left_side_slider.setDisabled(False)
+            self.home_form.right_side_slider.setDisabled(False)
             reply = QMessageBox.information(self, "服务连接", "连接成功", QMessageBox.Yes)
         else:
             self.home_form.connect_tcp_btn.setText("打开连接")
