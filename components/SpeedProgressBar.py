@@ -62,10 +62,19 @@ class SpeedProgressBar(QWidget):
   def drawColorPie(self, painter):
     """圆环"""
     radius = 98
+    painter.setPen(QtCore.Qt.PenStyle.NoPen)
+    painter.setBrush(QColor(172, 172, 172))
+    painter.drawEllipse(-radius, -radius, radius * 2, radius *2)
+    r = radius - 8 
+    painter.setBrush(QColor(40, 40, 40))
+    painter.setPen(QtCore.Qt.PenStyle.NoPen)
+    painter.drawEllipse(-r, -r, r * 2, r *2)
+    painter.restore()
+    radius = 98
     painter.save()
-    painter.setPen(QtCore.Qt.NoPen)
+    painter.setPen(QtCore.Qt.PenStyle.NoPen)
     painter.setPen(self.PieColor)
-    painter.setBrush(QtCore.Qt.NoBrush)
+    painter.setBrush(QtCore.Qt.BrushStyle.NoBrush)
     # 计算总范围角度，当前值范围角度，剩余值范围角度
     angleAll = 360.0 - self.StartAngle - self.EndAngle
     angleCurrent = angleAll * ((self.Value - self.MinValue) / (self.MaxValue - self.MinValue))
