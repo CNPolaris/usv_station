@@ -18,12 +18,19 @@
   </property>
   <property name="font">
    <font>
+    <family>Microsoft YaHei UI</family>
     <pointsize>12</pointsize>
+    <italic>false</italic>
     <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);
+font: 12pt &quot;Microsoft YaHei UI&quot;;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
@@ -51,12 +58,19 @@
   <widget class="QToolBar" name="toolBar">
    <property name="font">
     <font>
+     <family>Microsoft YaHei UI</family>
      <pointsize>12</pointsize>
+     <italic>false</italic>
      <bold>false</bold>
     </font>
    </property>
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 0, 0);
+color: rgb(255, 255, 255);
+font: 12pt &quot;Microsoft YaHei UI&quot;;</string>
    </property>
    <property name="movable">
     <bool>false</bool>

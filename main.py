@@ -7,7 +7,7 @@
 import sys
 
 from PySide6 import QtCore
-from PySide6.QtGui import QAction, QCloseEvent, QIcon, QPixmap
+from PySide6.QtGui import QAction, QCloseEvent, QIcon, QPixmap, QFont
 from PySide6.QtWebChannel import QWebChannel
 from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout, QPushButton, QMessageBox
 
@@ -29,7 +29,6 @@ class Window(QMainWindow):
         self.home_ = HomeWidget()
         self.video_ = VideoWidget()
         self.setting_widget = SettingWidget()
-
         self._qsl.addWidget(self.home_)
         self._qsl.addWidget(self.video_)
         # self._qsl.addWidget(self.setting_widget)
@@ -82,6 +81,10 @@ def win():
     w = Window()
     w.setWindowTitle("USV地面站软件v0.1")
     w.setWindowIcon(QIcon(config.get_icon_abs_path()))
+    # 背景色
+    w.setStyleSheet("QMainWindow{background-color: rgb(28, 28, 28)} QLabel{color: rgb(255, 255, 255)}")
+    # w.setStyleSheet("QLabel{color: rgb(255, 255, 255)}")
+    font = QFont()
     channel.registerObject('py', w)
     w.home_.home_form.MapWebView.page().setWebChannel(channel)
     w.home_.home_form.MapWebView.show()

@@ -33,6 +33,7 @@ class Ui_HomeForm(object):
         self.groupBox = QGroupBox(HomeForm)
         self.groupBox.setObjectName(u"groupBox")
         self.groupBox.setMaximumSize(QSize(276, 16777215))
+        self.groupBox.setStyleSheet(u"")
         self.verticalLayout_7 = QVBoxLayout(self.groupBox)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_8 = QVBoxLayout()
@@ -161,6 +162,7 @@ class Ui_HomeForm(object):
         self.connect_tcp_btn = QPushButton(self.control_box)
         self.connect_tcp_btn.setObjectName(u"connect_tcp_btn")
         self.connect_tcp_btn.setMinimumSize(QSize(95, 24))
+        self.connect_tcp_btn.setStyleSheet(u"color: rgb(255, 255, 255)")
 
         self.verticalLayout_6.addWidget(self.connect_tcp_btn)
 
@@ -273,7 +275,7 @@ class Ui_HomeForm(object):
 
     def retranslateUi(self, HomeForm):
         HomeForm.setWindowTitle(QCoreApplication.translate("HomeForm", u"Form", None))
-        self.groupBox.setTitle(QCoreApplication.translate("HomeForm", u"GroupBox", None))
+        self.groupBox.setTitle(QCoreApplication.translate("HomeForm", u"\u822a\u884c\u6570\u636e", None))
         self.label_12.setText(QCoreApplication.translate("HomeForm", u"\u5730\u9762\u822a\u5411", None))
         self.lat_value_label.setText(QCoreApplication.translate("HomeForm", u"TextLabel", None))
         self.label_7.setText(QCoreApplication.translate("HomeForm", u"\u7ecf\u5ea6", None))

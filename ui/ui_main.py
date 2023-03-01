@@ -25,9 +25,14 @@ class Ui_MainWindow(object):
         MainWindow.resize(1018, 544)
         MainWindow.setMinimumSize(QSize(1018, 544))
         font = QFont()
+        font.setFamilies([u"Microsoft YaHei UI"])
         font.setPointSize(12)
         font.setBold(False)
+        font.setItalic(False)
         MainWindow.setFont(font)
+        MainWindow.setStyleSheet(u"background-color: rgb(0, 0, 0);\n"
+"color: rgb(255, 255, 255);\n"
+"font: 12pt \"Microsoft YaHei UI\";")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setMinimumSize(QSize(600, 400))
@@ -44,6 +49,9 @@ class Ui_MainWindow(object):
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
         self.toolBar.setFont(font)
+        self.toolBar.setStyleSheet(u"background-color: rgb(0, 0, 0);\n"
+"color: rgb(255, 255, 255);\n"
+"font: 12pt \"Microsoft YaHei UI\";")
         self.toolBar.setMovable(False)
         MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 

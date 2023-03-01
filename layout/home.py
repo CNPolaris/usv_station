@@ -156,7 +156,7 @@ class HomeWidget(QWidget):
     def init_drive_data_label(self):
         """初始化航行数据label显示"""
         font = QFont()
-        font.setPointSize(20)
+        font.setPointSize(16)
         self.home_form.roll_value_label.setText(str(self.roll_value))
         self.home_form.roll_value_label.setFont(font)
         self.home_form.roll_value_label.setStyleSheet("QLabel{color: rgb(147, 112, 219)}")
