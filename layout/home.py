@@ -66,6 +66,16 @@ class HomeWidget(QWidget):
         plane_layout.addWidget(self.plane)
         self.home_form.post_widget.setLayout(plane_layout)
         ############################
+        # 横滚角、俯仰角、经度、纬度、速率、航向等数据
+        ############################
+        self.roll_value = 0.0
+        self.deg_value = 0.0
+        self.lng_value = 0.0
+        self.lat_value = 0.0
+        self.speed_value = 0.0
+        self.direct_value = 0.0
+        self.init_drive_data_label()
+        ############################
         # 油门进度条
         ############################
         layout = QHBoxLayout(self)
@@ -142,6 +152,29 @@ class HomeWidget(QWidget):
         """
         map_path = config.get_map_abs_path()
         self.home_form.MapWebView.load(QtCore.QUrl(map_path))
+    
+    def init_drive_data_label(self):
+        """初始化航行数据label显示"""
+        font = QFont()
+        font.setPointSize(20)
+        self.home_form.roll_value_label.setText(str(self.roll_value))
+        self.home_form.roll_value_label.setFont(font)
+        self.home_form.roll_value_label.setStyleSheet("QLabel{color: rgb(147, 112, 219)}")
+        self.home_form.deg_value_label.setText(str(self.deg_value))
+        self.home_form.deg_value_label.setFont(font)
+        self.home_form.deg_value_label.setStyleSheet("QLabel{color: rgb(205, 129, 98)}")
+        self.home_form.lng_value_label.setText(str(self.lng_value))
+        self.home_form.lng_value_label.setFont(font)
+        self.home_form.lng_value_label.setStyleSheet("QLabel{color: rgb(238, 154, 0)}")
+        self.home_form.lat_value_label.setText(str(self.lat_value))
+        self.home_form.lat_value_label.setFont(font)
+        self.home_form.lat_value_label.setStyleSheet("QLabel{color: rgb(238, 154, 0)}")
+        self.home_form.speed_value_label.setText(str(self.speed_value)) 
+        self.home_form.speed_value_label.setFont(font)
+        self.home_form.speed_value_label.setStyleSheet("QLabel{color: rgb(107, 142, 35)}")
+        self.home_form.direct_value_label.setText(str(self.direct_value))
+        self.home_form.direct_value_label.setFont(font)
+        self.home_form.direct_value_label.setStyleSheet("QLabel{color: rgb(189, 183, 107)}")
         
     def on_connect_tcp_btn_clicked(self):
         """连接TCP服务器"""

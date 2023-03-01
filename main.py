@@ -16,7 +16,7 @@ from layout.home import HomeWidget
 from layout.video import VideoWidget
 from layout.setting import SettingWidget
 from threads.command_thread import CommandThread
-
+from utils.config import config
 class Window(QMainWindow):
 
     def __init__(self):
@@ -81,9 +81,7 @@ def win():
 
     w = Window()
     w.setWindowTitle("USV地面站软件v0.1")
-    icon = QIcon()
-    icon.addPixmap(QPixmap("static/img/logo.ico"),QIcon.Normal, QIcon.Off)
-    w.setWindowIcon(icon)
+    w.setWindowIcon(QIcon(config.get_icon_abs_path()))
     channel.registerObject('py', w)
     w.home_.home_form.MapWebView.page().setWebChannel(channel)
     w.home_.home_form.MapWebView.show()

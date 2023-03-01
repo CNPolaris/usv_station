@@ -22,8 +22,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(867, 544)
-        MainWindow.setMinimumSize(QSize(600, 430))
+        MainWindow.resize(1018, 544)
+        MainWindow.setMinimumSize(QSize(1018, 544))
         font = QFont()
         font.setPointSize(12)
         font.setBold(False)

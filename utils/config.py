@@ -95,6 +95,10 @@ class Config(object):
         img_path = (self.project_path + f"static{os.sep}img{os.sep}{img}.png").replace(os.sep, "/")
         return img_path
     
+    def get_icon_abs_path(self):
+        """icon"""
+        return (self.project_path + f"static{os.sep}img{os.sep}logo.ico").replace(os.sep, "/")  
+      
     @staticmethod
     def get_tcp_server_ip() -> str:
         """get_server_ip 获取配置文件中的监听ip
