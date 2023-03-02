@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>地图展示</title>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/CNPolaris/usv_ctrl/static/js/qwebchannel.js"></script>
+    <script type="text/javascript" src="../static/js/qwebchannel.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <style>
@@ -87,7 +87,7 @@
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=98edo3vSG3UhY6lLnN9vr3l3wZPDK1Cj"></script>
     <script type="text/javascript" src="https://mapv.baidu.com/build/mapv.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
     <link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
 
@@ -115,4 +115,19 @@ map.setMapType(BMAP_SATELLITE_MAP);
 var scaleCtrl = new BMap.ScaleControl();  // 添加比例尺控件
 map.addControl(scaleCtrl);
 map.addControl(new BMap.NavigationControl({type:BMAP_NAVIGATION_CONTROL_ZOOM})); // 添加缩放控件
+
+/**
+ * 网关连接成功后，在地图上添加船体标注
+ * @param { object } gatewayInfo
+ * 				包含gatewayKey和第一次收到的坐标位置
+ */
+function addNewShipMarker(gatewayInfo) {
+	let allOverlay = map.getOverlays();
+	let shipIcon = new BMap.Icon("../static/img/ship.png",new BMap.Size(55, 60),{imageOffset: new BMap.Size(0, 0)});
+	// 临时点
+	let point = new BMap.Point(119.373175, 32.119817);
+	let marker_ship = new BMap.Marker(point, { icon: shipIcon, enableMassClear: false });
+	marker_ship.id = gatewayInfo.gatewayKey;
+	map.addOverlay(marker_ship) // 添加船体标注
+}
 </script>

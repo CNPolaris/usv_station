@@ -76,18 +76,14 @@ class Window(QMainWindow):
 
 def win():
     app = QApplication(sys.argv)
-    channel = QWebChannel()
 
     w = Window()
     w.setWindowTitle("USV地面站软件v0.1")
     w.setWindowIcon(QIcon(config.get_icon_abs_path()))
     # 背景色
     w.setStyleSheet("QMainWindow{background-color: rgb(72, 61, 139)} QLabel{color: rgb(255, 255, 255)} QDialog{background-color: rgb(214, 77, 84)}")
-    channel.registerObject('py', w)
-    w.home_.home_form.MapWebView.page().setWebChannel(channel)
-    w.home_.home_form.MapWebView.show()
     w.show()
-
+    
     sys.exit(app.exec())
 
 

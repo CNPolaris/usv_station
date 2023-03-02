@@ -11,6 +11,7 @@ from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF, QTimer
 from PySide6.QtGui import QColor, QPainter, QFont, QIcon
 from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSlider, QLabel, QMessageBox
+from PySide6.QtWebChannel import QWebChannel
 
 from ui.ui_home import Ui_HomeForm
 from utils.config import config
@@ -54,6 +55,11 @@ class HomeWidget(QWidget):
         self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, True)
         self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
         self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.LocalStorageEnabled, True)
+        self.webPage = self.home_form.MapWebView.page()
+        self.channel = QWebChannel(self)
+        self.channel.registerObject('py', self)
+        self.webPage.setWebChannel(self.channel)
+        self.initWebSetting()
         self.load_map()
         ############################
         # 航速姿态等组件
@@ -152,6 +158,12 @@ class HomeWidget(QWidget):
         self.left_signal.connect(self.command_thread.send_left_accelerator_to_dtu)
         self.right_signal.connect(self.command_thread.send_right_accelerator_to_dtu)
         
+    def initWebSetting(self):
+        settings = self.home_form.MapWebView.settings()
+        WebAttribute = QWebEngineSettings.WebAttribute
+        settings.setAttribute(WebAttribute.LocalContentCanAccessRemoteUrls, True)
+        settings.setDefaultTextEncoding("utf-8")
+        settings.setAttribute(WebAttribute.XSSAuditingEnabled, True)
     def load_map(self):
         """
         载入地图资源
@@ -220,18 +232,29 @@ class HomeWidget(QWidget):
     def connect_process_bar(self, flag):
         """连接服务器进度动画"""
         if flag == 1:  # 连接服务器成功
-            self.home_form.connect_tcp_btn.setText("结束连接")
-            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("stop")))
             self.is_connect = False
             self.connect_process_widget.close()
             self.home_form.left_slider.setDisabled(False)
             self.home_form.right_slider.setDisabled(False)
             self.home_form.left_side_slider.setDisabled(False)
             self.home_form.right_side_slider.setDisabled(False)
+            # 地图添加船体标注
+            info = {'gatewayKey': config.get_access_key()}
+            self.add_ship_marker_in_map(info)
             reply = QMessageBox.information(self, "服务连接", "连接成功", QMessageBox.Yes)
         else:
-            self.home_form.connect_tcp_btn.setText("打开连接")
-            self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
             self.connect_process_widget.close()
             reply = QMessageBox.warning(self, "服务连接", "连接失败", QMessageBox.Yes)
+            self.server_switch_btn.state = False
             self.command_thread.quit()
+            
+    def add_ship_marker_in_map(self, info):
+        """add_ship_marker_in_map 在地图上添加船体标注
+
+        Parameters
+        ----------
+        info : _type_
+            _description_
+        """
+        print(info)
+        self.webPage.runJavaScript(f'addNewShipMarker({info})')
