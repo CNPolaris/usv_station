@@ -13,6 +13,7 @@ __author__ = "tian.xin"
 import os
 import operator
 from configparser import RawConfigParser
+from logger import logger
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__)).split('utils')[0]
 
@@ -68,7 +69,7 @@ class Config(object):
             with open(self._config_path, 'w') as f2:
                     for line in f1:
                         f2.write(line)
-        
+        logger.warning("[配置文件-重置]")
     def join_absolute_path(self, relative_path) -> str:
         """join_absolute_path 拼接全局路径
 
@@ -98,7 +99,7 @@ class Config(object):
     def get_icon_abs_path(self):
         """icon"""
         return (self.project_path + f"static{os.sep}img{os.sep}logo.ico").replace(os.sep, "/")  
-      
+    
     @staticmethod
     def get_tcp_server_ip() -> str:
         """get_server_ip 获取配置文件中的监听ip
@@ -194,6 +195,7 @@ class Config(object):
         config.set_config_data("system-config", "monitor_url", cfg['monitor_url'])
         config.set_config_data("system-config", "monitor_key", cfg['monitor_key'])
         config.set_config_data("device", "access_key", cfg['access_key'])
+        logger.warning(f"[配置文件-修改]-->{cfg}")
         with open(self._config_path, 'w') as config_file: self.config_parser.write(config_file)
 
 config = Config()

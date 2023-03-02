@@ -9,6 +9,7 @@ from PySide6.QtWidgets import QWidget
 
 from ui.ui_setting import Ui_SettingForm
 from utils.config import config
+from utils.logger import logger
 
 class SettingWidget(QWidget):
   def __init__(self) -> None:

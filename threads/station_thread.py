@@ -35,6 +35,7 @@ class StationThread(QThread):
   def destroy(self):
     self.send_msg_tcp_server(bytes("-1", encoding='utf-8'))
     self.station_sock.close()
+    logger.warning("[地面站-数据接收]关闭服务器连接")
     self.quit()
   
   def send_msg_tcp_server(self, data):

@@ -11,6 +11,7 @@ import json
 from PySide6 import QtCore
 
 from utils.config import config
+from utils.logger import logger
 
 class CommandThread(QtCore.QThread):
   send_connect_flag_signal = QtCore.Signal(int)
@@ -27,8 +28,9 @@ class CommandThread(QtCore.QThread):
       self.command_sock.connect((config.get_tcp_server_ip(), config.get_tcp_server_port()))
       self.command_sock.send(bytes(config.get_connect_key(), encoding='utf8'))
       self.send_connect_flag_signal.emit(1)  #连接成功
-    except:
-      print("连接服务器失败")
+      logger.info("[地面站-控制模块]连接服务器成功")
+    except Exception as e:
+      logger.error(f"[地面站-控制模块]连接服务器失败-->{e}")
       self.send_connect_flag_signal.emit(0)  #连接失败
       
   def destroy(self):
@@ -36,6 +38,7 @@ class CommandThread(QtCore.QThread):
     self.send_msg_tcp_server(bytes("-1", encoding='utf-8'))
     self.command_sock.close()
     self.send_destroy_flag_signal.emit(1)  #关闭成功
+    logger.warning("[地面站-控制模块]关闭服务器连接")
     self.quit()
     
   def send_left_accelerator_to_dtu(self, left):

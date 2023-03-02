@@ -15,6 +15,7 @@ from PySide6.QtWebChannel import QWebChannel
 
 from ui.ui_home import Ui_HomeForm
 from utils.config import config
+from utils.logger import logger
 from threads.command_thread import CommandThread
 from threads.station_thread import StationThread
 from components.CircleProgressBar import CircleProgressBar
@@ -258,4 +259,5 @@ class HomeWidget(QWidget):
         info : dict
             连接时船体相关信息
         """
+        logger.info(f"[添加船体]-->{info}")
         self.webPage.runJavaScript(f'addNewShipMarker({info})')
