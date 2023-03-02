@@ -108,13 +108,18 @@
 /**
 * 地图资源初始化以及原生控件添加
 */
-var map = new BMap.Map('container'); // 创建Map实例
+var map = new BMap.Map('container'); 													// 创建Map实例
 map.centerAndZoom(new BMap.Point(119.373175, 32.119817), 18); // 初始化地图,设置中心点坐标和地图级别
-map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-map.setMapType(BMAP_SATELLITE_MAP);
-var scaleCtrl = new BMap.ScaleControl();  // 添加比例尺控件
+map.enableScrollWheelZoom(true); 															// 开启鼠标滚轮缩放
+map.setMapType(BMAP_SATELLITE_MAP);														// 地图类型 百度卫星地图
+var scaleCtrl = new BMap.ScaleControl();  										// 添加比例尺控件
 map.addControl(scaleCtrl);
 map.addControl(new BMap.NavigationControl({type:BMAP_NAVIGATION_CONTROL_ZOOM})); // 添加缩放控件
+
+var coords = [];   			// 航迹坐标list
+var polylineArray = [];	// 存放航迹layout
+var polylineJson = {};	// 航线样式
+
 
 /**
  * 网关连接成功后，在地图上添加船体标注
@@ -129,5 +134,109 @@ function addNewShipMarker(gatewayInfo) {
 	let marker_ship = new BMap.Marker(point, { icon: shipIcon, enableMassClear: false });
 	marker_ship.id = gatewayInfo.gatewayKey;
 	map.addOverlay(marker_ship) // 添加船体标注
+}
+
+/**
+ * 无人船航行轨迹显示，允许多船显示
+ * @param {Object} info 无人船信息，用于表示不同USV
+ * @param {Object} data 轨迹坐标
+*/
+function genCoordsLine(info, data) {
+	let id = info.gatewayKey;
+	let _have = false;
+	var allOverlay = map.getOverlays(); //获取地图上的覆盖物
+	if(polylineArray.length !== 0){
+			for(var i = 0;i < polylineArray.length; i++){
+					if(polylineArray[i].id === id){//此条路径存在
+							_have = true;
+							var pathArray = polylineArray[i].pathArray;
+							pathArray.push(new BMap.Point(data.lng, data.lat)); // 更新数据
+							for (let j=0; j<allOverlay.length; j++){
+									//判断是否为polyline
+									if(allOverlay[j].toString() === "[object Polyline]"){
+											if(allOverlay[j].id === id){
+													allOverlay[j].setPath(pathArray);
+													break;
+											} else { //数组中存在，但是地图上没有
+													if(j === allOverlay.length - 1){
+															var polylineTemp = new BMap.Polyline(pathArray,{strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5});
+															polylineTemp.id = id; // 为路线赋值唯一id
+															map.addOverlay(polylineTemp); // 添加折线到地图
+													}
+											}
+									}
+							}
+					}
+			}
+			if(_have === false){ // 路径不存在
+					var pathArray = [];
+					pathArray.push(new BMap.Point(data.lng, data.lat));
+					var polylineTemp = new BMap.Polyline(pathArray,{strokeColor:"#FFD700", strokeWeight:3, strokeOpacity:0.5});
+					polylineTemp.id = id;
+					map.addOverlay(polylineTemp);
+					var polylineJson = {};
+					polylineJson['id'] = id;
+					polylineJson['pathArray'] = pathArray;
+					polylineArray.push(polylineJson);
+			}
+
+	} else {
+			var pathArray = [];
+			pathArray.push(new BMap.Point(data.lng, data.lat));
+			var polylineTemp = new BMap.Polyline(pathArray,{strokeColor:"#FFD700", strokeWeight:3, strokeOpacity:0.5});
+			polylineTemp.id = id;
+			map.addOverlay(polylineTemp);
+			var polylineJson = {};
+			polylineJson['id'] = id;
+			polylineJson['pathArray'] = pathArray;
+			polylineArray.push(polylineJson);
+	}
+	// 移动船体
+	moveShipMarker(id, data);
+}
+
+/**
+ * 当坐标发生变化时，移动船体标注
+ * @param {Number} id 船的id
+ * @param {JSON} coord 要移动到的坐标点
+*/
+function moveShipMarker(id, coord){
+	var allOverlay = map.getOverlays();
+	for(let i = 0; i<allOverlay.length;i++){
+			if(allOverlay[i].toString() === '[object Marker]'){
+					if(allOverlay[i].id === id){
+							let p = allOverlay[i].getPosition();
+							let angle = calc_angle(p.lng, p.lat, coord.lng, coord.lat);
+							allOverlay[i].setPosition(new BMap.Point(coord.lng, coord.lat));
+							allOverlay[i].setRotation(angle);  // 因为目前的标注物初始角度指向正北方向
+					}
+			}
+	}
+}
+
+/**
+ * 计算两个坐标点对于正北方向的朝向角度[0, 360]
+ * @param {Number} x1 点1的lng
+ * @param {Number} y1 点1的lat
+ * @param {Number} x2 点2的lng
+ * @param {Number} y2 点2的lat
+ * @return {Number} 计算后的弧度角
+*/
+function calc_angle(x1, y1, x2, y2){
+	let angle = 0;
+	let rad = Math.PI / 180;
+	const a = Math.sin(x2 - x1) * Math.cos(y2);
+	const b = Math.cos(y1) * Math.sin(y2) - Math.sin(y1) * Math.cos(y2) * Math.cos(x2 - x1);
+	return radiansToDegrees(Math.atan2(a, b));
+}
+
+/**
+ * 弧度转角度
+ * @param {Number} radians  弧度角
+ * @returns {Number} degree 角度制
+*/
+function radiansToDegrees(radians){
+	const degrees = radians % (2 * Math.PI);
+	return degrees * 180 / Math.PI;
 }
 </script>
