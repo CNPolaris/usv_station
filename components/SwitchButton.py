@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 # 自定义开关按钮
 __author__ = "tian.xin"
-from PySide6.QtCore import Property as pyqtProperty,QRect, Qt
+from PySide6.QtCore import QRect, Qt, Signal
 from PySide6.QtGui import QColor, QPainter, QFont, QPen, QBrush
-from PySide6.QtWidgets import QWidget, QApplication
+from PySide6.QtWidgets import QWidget
 
 class SwitchButton(QWidget):
     """自定义Switch按钮"""
-
+    # 信号量
+    toggled = Signal(bool)
     def __init__(self, parent=None):
         super(SwitchButton, self).__init__(parent)
 
@@ -23,6 +24,8 @@ class SwitchButton(QWidget):
         super(SwitchButton, self).mousePressEvent(event)
 
         self.state = False if self.state else True
+        # 发送信号
+        self.toggled.emit(self.state)
         self.update()
 
     def paintEvent(self, event):

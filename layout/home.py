@@ -20,6 +20,7 @@ from components.CircleProgressBar import CircleProgressBar
 from components.PercentProgressBar import PercentProgressBar
 from components.SpeedProgressBar import SpeedProgressBar
 from components.PostPlane import PostPlane
+from components.SwitchButton import SwitchButton
 
 
 showMessage = QMessageBox.question
@@ -129,11 +130,16 @@ class HomeWidget(QWidget):
         self.home_form.left_slider.valueChanged.connect(self.left_signal.emit)
         self.home_form.right_slider.valueChanged.connect(self.right_signal.emit)
         ############################
+        # 控制按钮
+        ############################
+        self.server_switch_btn = SwitchButton()         #地面站控制开关
+        self.server_switch_btn.setMinimumSize(70, 30)
+        self.server_switch_btn.setMaximumSize(70, 30)
+        self.server_switch_btn.toggled.connect(self.on_server_switch_btn_click)
+        self.init_control_btn_layout()
+        ############################
         # 连接tcp服务器设置
         ############################
-        self.is_connect = True  # 状态变量 False时未连接 True时已经连接
-        self.home_form.connect_tcp_btn.setIcon(QIcon(config.get_static_img_abs_path("start")))
-        self.home_form.connect_tcp_btn.clicked.connect(self.on_connect_tcp_btn_clicked)
         self.connect_process_widget = ConnectProcessWidget()  # 连接服务器进度条组件
         ##################################
         # 子线程
@@ -152,7 +158,42 @@ class HomeWidget(QWidget):
         """
         map_path = config.get_map_abs_path()
         self.home_form.MapWebView.load(QtCore.QUrl(map_path))
-    
+        
+    def init_control_btn_layout(self):
+        """初始化控制按钮组
+        """
+        btn_layout = QHBoxLayout()
+        btn_label = QLabel("服务器连接")
+        font = QFont()
+        font.setPointSize(12)
+        btn_label.setFont(font)
+        btn_layout.addWidget(btn_label)
+        btn_layout.addWidget(self.server_switch_btn)
+        self.home_form.control_btn_widget.setLayout(btn_layout)
+
+    def on_server_switch_btn_click(self, toggle):
+        """服务器连接切换按钮
+
+        Parameters
+        ----------
+        toggle : bool
+            连接开关 True: 开关打开 False: 关闭
+        """
+        if toggle:
+            # 进度条
+            self.connect_process_widget.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
+            self.connect_process_widget.show()
+            self.command_thread.start()
+            self.station_thread.start()
+        else:
+            self.command_thread.destroy()
+            self.station_thread.destroy()
+            # 断开连接后 锁死 避免出错
+            self.home_form.left_slider.setDisabled(True)
+            self.home_form.right_slider.setDisabled(True)
+            self.home_form.left_side_slider.setDisabled(True)
+            self.home_form.right_side_slider.setDisabled(True)
+            
     def init_drive_data_label(self):
         """初始化航行数据label显示"""
         font = QFont()
@@ -176,24 +217,6 @@ class HomeWidget(QWidget):
         self.home_form.direct_value_label.setFont(font)
         self.home_form.direct_value_label.setStyleSheet("QLabel{color: rgb(189, 183, 107)}")
         
-    def on_connect_tcp_btn_clicked(self):
-        """连接TCP服务器"""
-        if self.is_connect:
-            self.command_thread.start()
-            self.station_thread.start()
-            # 进度条
-            self.connect_process_widget.setWindowModality(QtCore.Qt.ApplicationModal)
-            self.connect_process_widget.show()
-        else:
-            self.is_connect = True
-            self.command_thread.destroy()
-            self.station_thread.destroy()
-            # 断开连接后 锁死 避免出错
-            self.home_form.left_slider.setDisabled(True)
-            self.home_form.right_slider.setDisabled(True)
-            self.home_form.left_side_slider.setDisabled(True)
-            self.home_form.right_side_slider.setDisabled(True)
-    
     def connect_process_bar(self, flag):
         """连接服务器进度动画"""
         if flag == 1:  # 连接服务器成功

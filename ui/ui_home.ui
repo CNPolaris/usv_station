@@ -258,18 +258,12 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QPushButton" name="connect_tcp_btn">
+         <widget class="QWidget" name="control_btn_widget" native="true">
           <property name="minimumSize">
            <size>
             <width>95</width>
-            <height>24</height>
+            <height>60</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(255, 255, 255)</string>
-          </property>
-          <property name="text">
-           <string>打开连接</string>
           </property>
          </widget>
         </item>
@@ -293,7 +287,7 @@
               <property name="minimumSize">
                <size>
                 <width>40</width>
-                <height>160</height>
+                <height>100</height>
                </size>
               </property>
               <property name="orientation">
@@ -331,7 +325,7 @@
               <property name="minimumSize">
                <size>
                 <width>40</width>
-                <height>160</height>
+                <height>100</height>
                </size>
               </property>
               <property name="orientation">
@@ -375,7 +369,7 @@
               <property name="minimumSize">
                <size>
                 <width>40</width>
-                <height>160</height>
+                <height>100</height>
                </size>
               </property>
               <property name="orientation">
@@ -416,7 +410,7 @@
               <property name="minimumSize">
                <size>
                 <width>40</width>
-                <height>160</height>
+                <height>100</height>
                </size>
               </property>
               <property name="orientation">
