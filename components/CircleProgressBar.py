@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = "tian.xin"
 
-from PySide6 import QtCore
-from PySide6.QtWebEngineCore import QWebEngineSettings
-from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF, QTimer
-from PySide6.QtGui import QColor, QPainter, QFont, QIcon
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSlider, QLabel
+from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QTimer
+from PySide6.QtGui import QColor, QPainter
+from PySide6.QtWidgets import QWidget
 
 class CircleProgressBar(QWidget):
     Color = QColor(24, 189, 155)  # 圆圈颜色
@@ -24,7 +22,7 @@ class CircleProgressBar(QWidget):
     def paintEvent(self, event):
         super(CircleProgressBar, self).paintEvent(event)
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.translate(self.width() / 2, self.height() / 2)
         side = min(self.width(), self.height())
         painter.scale(side / 100.0, side / 100.0)

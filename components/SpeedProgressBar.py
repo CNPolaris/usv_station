@@ -45,7 +45,7 @@ class SpeedProgressBar(QWidget):
     painter = QPainter(self)
     painter.translate(width / 2, height / 2)
     painter.scale(side / 200.0, side / 200.0)
-    painter.setRenderHints(QPainter.Antialiasing | QPainter.TextAntialiasing) 
+    painter.setRenderHints(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.TextAntialiasing) 
     # 绘制圆弧
     self.drawColorPie(painter)
     # 绘制单位

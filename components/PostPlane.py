@@ -2,10 +2,9 @@
 # 姿态仪表盘
 __author__ = "tian.xin"
 
-from PySide6 import QtCore
-from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF, QTimer, QRect
-from PySide6.QtGui import QColor, QPainter, QFont, QIcon, QLinearGradient
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSlider, QLabel
+from PySide6.QtCore import Qt, QRect
+from PySide6.QtGui import QColor, QPainter, QFont, QLinearGradient, QPen
+from PySide6.QtWidgets import QWidget
 
 class PostPlane(QWidget):
   BorderOutColorStart = QColor(131, 139, 131)  # 外边框渐变开始颜色
@@ -32,7 +31,7 @@ class PostPlane(QWidget):
     
     # 绘制准备工作,启用反锯齿,平移坐标轴中心,等比例缩放
     painter = QPainter(self)
-    painter.setRenderHints(QPainter.Antialiasing | QPainter.TextAntialiasing)
+    painter.setRenderHints(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.TextAntialiasing)
     painter.translate(width / 2, height / 2)
     painter.scale(side / 200.0, side / 200.0)
     # 绘制外边框
@@ -150,23 +149,21 @@ class PostPlane(QWidget):
     painter.setPen(Qt.PenStyle.NoPen)
     painter.setBrush(self.HandleColor)
     # 先绘制中心
-    radius = 6
-    painter.drawEllipse(0, -radius/2, radius, radius)
+    radius = 4
+    painter.drawEllipse(-radius, -radius, radius * 2, radius *2)
     painter.restore()
-    # 绘制水平弧
-    # radius = 20
-    # painter.setPen(Qt.PenStyle.NoPen)
-    # painter.setPen(self.HandleColor)
-    # painter.drawLine(0, 0, 0, 20)
-    # rect = QRect(-18, -20, radius * 2, radius * 2)
-    # painter.drawArc(rect, 0 * 16, -180 * 16)
-    # painter.restore()
-    
-    # painter.setPen(Qt.PenStyle.NoPen)
-    # painter.setPen(self.HandleColor)
-    # painter.drawLine(-18, 0, -30, 0)
-    # painter.drawLine(22, 0, 38, 0)
-    # painter.restore()
+    # 绘制水平
+    radius = 20
+    painter.setPen(Qt.PenStyle.NoPen)
+    pen = QPen()
+    pen.setColor(self.HandleColor)
+    pen.setWidth(2)
+    painter.setPen(pen)
+    painter.drawLine(radius * 2, 0, radius * 3.5, 0)
+    painter.drawLine(-radius * 2, 0, -radius * 3.5, 0)
+    painter.drawLine(0, 0, radius / 2, radius / 2)
+    painter.drawLine(0, 0, -radius / 2, radius / 2)
+
   def setRollValue(self, value):
     self.RollValue = float(value)
   

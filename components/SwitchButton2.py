@@ -3,8 +3,8 @@
 __author__ = "tian.xin"
 
 from PySide6 import QtCore
-from PySide6.QtCore import Property as pyqtProperty,  QRectF, QTimer, QRect
-from PySide6.QtGui import QColor, QPainter, QFont, QPolygon, QPainterPath, QPen, QRadialGradient
+from PySide6.QtCore import QRectF, QTimer
+from PySide6.QtGui import QColor, QPainter, QPainterPath
 from PySide6.QtWidgets import QWidget, QApplication
 
 class SwitchButton2(QWidget):

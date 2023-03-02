@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = "tian.xin"
 
-from PySide6 import QtCore
-from PySide6.QtWebEngineCore import QWebEngineSettings
-from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF, QTimer
-from PySide6.QtGui import QColor, QPainter, QFont, QIcon
-from PySide6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QSlider, QLabel
+from PySide6.QtCore import Property as pyqtProperty, QSize, Qt, QRectF
+from PySide6.QtGui import QColor, QPainter, QFont
+from PySide6.QtWidgets import QWidget
 
 class PercentProgressBar(QWidget):
     MinValue = 0
@@ -54,8 +52,8 @@ class PercentProgressBar(QWidget):
 
         painter = QPainter(self)
         # 反锯齿
-        painter.setRenderHints(QPainter.Antialiasing |
-                               QPainter.TextAntialiasing)
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing |
+                               QPainter.RenderHint.TextAntialiasing)
         # 坐标中心为中间点
         painter.translate(width / 2, height / 2)
         # 按照100x100缩放
