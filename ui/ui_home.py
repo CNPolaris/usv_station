@@ -166,6 +166,12 @@ class Ui_HomeForm(object):
 
         self.verticalLayout_6.addWidget(self.connect_tcp_btn)
 
+        self.control_btn_widget = QWidget(self.control_box)
+        self.control_btn_widget.setObjectName(u"control_btn_widget")
+        self.control_btn_widget.setMinimumSize(QSize(95, 60))
+
+        self.verticalLayout_6.addWidget(self.control_btn_widget)
+
         self.process_widget = QWidget(self.control_box)
         self.process_widget.setObjectName(u"process_widget")
         self.process_widget.setMinimumSize(QSize(95, 71))
@@ -180,7 +186,7 @@ class Ui_HomeForm(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.left_side_slider = QSlider(self.control_box)
         self.left_side_slider.setObjectName(u"left_side_slider")
-        self.left_side_slider.setMinimumSize(QSize(40, 160))
+        self.left_side_slider.setMinimumSize(QSize(40, 100))
         self.left_side_slider.setOrientation(Qt.Vertical)
 
         self.verticalLayout_4.addWidget(self.left_side_slider)
@@ -202,7 +208,7 @@ class Ui_HomeForm(object):
         self.verticalLayout_2.setContentsMargins(0, -1, -1, -1)
         self.left_slider = QSlider(self.control_box)
         self.left_slider.setObjectName(u"left_slider")
-        self.left_slider.setMinimumSize(QSize(40, 160))
+        self.left_slider.setMinimumSize(QSize(40, 100))
         self.left_slider.setOrientation(Qt.Vertical)
 
         self.verticalLayout_2.addWidget(self.left_slider)
@@ -223,7 +229,7 @@ class Ui_HomeForm(object):
         self.verticalLayout_3.setContentsMargins(1, -1, -1, -1)
         self.right_slider = QSlider(self.control_box)
         self.right_slider.setObjectName(u"right_slider")
-        self.right_slider.setMinimumSize(QSize(40, 160))
+        self.right_slider.setMinimumSize(QSize(40, 100))
         self.right_slider.setOrientation(Qt.Vertical)
 
         self.verticalLayout_3.addWidget(self.right_slider)
@@ -243,7 +249,7 @@ class Ui_HomeForm(object):
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.right_side_slider = QSlider(self.control_box)
         self.right_side_slider.setObjectName(u"right_side_slider")
-        self.right_side_slider.setMinimumSize(QSize(40, 160))
+        self.right_side_slider.setMinimumSize(QSize(40, 100))
         self.right_side_slider.setOrientation(Qt.Vertical)
 
         self.verticalLayout_5.addWidget(self.right_side_slider)
