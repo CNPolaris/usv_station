@@ -52,9 +52,9 @@ class HomeWidget(QWidget):
         super().__init__()
         self.home_form = Ui_HomeForm()
         self.home_form.setupUi(self)
-        self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, True)
-        self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
-        self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.LocalStorageEnabled, True)
+        self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessRemoteUrls, True)
+        self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.WebAttribute.LocalContentCanAccessFileUrls, True)
+        self.home_form.MapWebView.page().settings().setAttribute(QWebEngineSettings.WebAttribute.LocalStorageEnabled, True)
         self.webPage = self.home_form.MapWebView.page()
         self.channel = QWebChannel(self)
         self.channel.registerObject('py', self)
@@ -159,11 +159,13 @@ class HomeWidget(QWidget):
         self.right_signal.connect(self.command_thread.send_right_accelerator_to_dtu)
         
     def initWebSetting(self):
+        """初始化Web相关设置"""
         settings = self.home_form.MapWebView.settings()
         WebAttribute = QWebEngineSettings.WebAttribute
         settings.setAttribute(WebAttribute.LocalContentCanAccessRemoteUrls, True)
         settings.setDefaultTextEncoding("utf-8")
         settings.setAttribute(WebAttribute.XSSAuditingEnabled, True)
+        
     def load_map(self):
         """
         载入地图资源
@@ -253,8 +255,7 @@ class HomeWidget(QWidget):
 
         Parameters
         ----------
-        info : _type_
-            _description_
+        info : dict
+            连接时船体相关信息
         """
-        print(info)
         self.webPage.runJavaScript(f'addNewShipMarker({info})')
