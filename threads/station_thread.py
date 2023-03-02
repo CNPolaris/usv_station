@@ -45,8 +45,8 @@ class StationThread(QThread):
     header_json = json.dumps(header_dic) #字符串类型
     header_bytes = header_json.encode('utf-8')  #转成bytes类型(但是长度是可变的)
     # #先发报头的长度
-    self.command_sock.send(struct.pack('i',len(header_bytes))) #发送固定长度的报头
+    self.station_sock.send(struct.pack('i',len(header_bytes))) #发送固定长度的报头
     # #再发报头
-    self.command_sock.send(header_bytes)
+    self.station_sock.send(header_bytes)
     # #最后发命令的结果
-    self.command_sock.send(data)
+    self.station_sock.send(data)
