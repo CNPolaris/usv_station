@@ -116,6 +116,19 @@ var scaleCtrl = new BMap.ScaleControl();  										// 添加比例尺控件
 map.addControl(scaleCtrl);
 map.addControl(new BMap.NavigationControl({type:BMAP_NAVIGATION_CONTROL_ZOOM})); // 添加缩放控件
 
+// 用添加版权的方式展示航迹颜色
+var cr = new BMapGL.CopyrightControl({
+	anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+	offset: new BMapGL.Size(20, 20)
+});										   	//设置版权控件位置
+map.addControl(cr); 			//添加版权控件
+var bs = map.getBounds(); //返回地图可视区域
+cr.addCopyright({
+	id: 1, 
+	content: "航迹线<hr size='5px' noshade=true color='#FFD700' />", 
+	bounds: bs
+});
+
 var coords = [];   			// 航迹坐标list
 var polylineArray = [];	// 存放航迹layout
 var polylineJson = {};	// 航线样式
@@ -159,7 +172,7 @@ function genCoordsLine(info, data) {
 													break;
 											} else { //数组中存在，但是地图上没有
 													if(j === allOverlay.length - 1){
-															var polylineTemp = new BMap.Polyline(pathArray,{strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5});
+															var polylineTemp = new BMap.Polyline(pathArray,{strokeColor:"#FFD700", strokeWeight:3, strokeOpacity:0.5});
 															polylineTemp.id = id; // 为路线赋值唯一id
 															map.addOverlay(polylineTemp); // 添加折线到地图
 													}
