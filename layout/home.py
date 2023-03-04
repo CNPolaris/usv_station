@@ -77,12 +77,12 @@ class HomeWidget(QWidget):
         ############################
         # 横滚角、俯仰角、经度、纬度、速率、航向等数据
         ############################
-        self.roll_value = 0.0
-        self.deg_value = 0.0
-        self.lng_value = 0.0
-        self.lat_value = 0.0
-        self.speed_value = 0.0
-        self.direct_value = 0.0
+        self.roll_value = 0.0   #横滚角
+        self.deg_value = 0.0    #俯仰角
+        self.lng_value = 0.0    #经度
+        self.lat_value = 0.0    #纬度
+        self.speed_value = 0.0  #地面速率
+        self.direct_value = 0.0 #当前航向
         self.init_drive_data_label()
         ############################
         # 油门进度条
@@ -118,9 +118,9 @@ class HomeWidget(QWidget):
         layout.addWidget(self.right_side_percent)
         self.home_form.process_layout.addLayout(layout)
         # slider设置最大值最小值，启动时锁死，直到建立连接后解锁
-        self.home_form.left_slider.setMinimum(0)
+        self.home_form.left_slider.setMinimum(-100)
         self.home_form.left_slider.setMaximum(100)
-        self.home_form.right_slider.setMaximum(0)
+        self.home_form.right_slider.setMinimum(-100)
         self.home_form.right_slider.setMaximum(100)
         self.home_form.left_slider.setDisabled(True)
         self.home_form.right_slider.setDisabled(True)
@@ -239,25 +239,25 @@ class HomeWidget(QWidget):
     def init_drive_data_label(self):
         """初始化航行数据label显示"""
         font = QFont()
-        font.setPointSize(16)
+        font.setPointSize(18)
         self.home_form.roll_value_label.setText(str(self.roll_value))
         self.home_form.roll_value_label.setFont(font)
-        self.home_form.roll_value_label.setStyleSheet("QLabel{color: rgb(147, 112, 219)}")
+        self.home_form.roll_value_label.setStyleSheet("QLabel{color: rgb(255, 147, 38)}")
         self.home_form.deg_value_label.setText(str(self.deg_value))
         self.home_form.deg_value_label.setFont(font)
-        self.home_form.deg_value_label.setStyleSheet("QLabel{color: rgb(205, 129, 98)}")
+        self.home_form.deg_value_label.setStyleSheet("QLabel{color: rgb(255, 147, 38)}")
         self.home_form.lng_value_label.setText(str(self.lng_value))
         self.home_form.lng_value_label.setFont(font)
-        self.home_form.lng_value_label.setStyleSheet("QLabel{color: rgb(238, 154, 0)}")
+        self.home_form.lng_value_label.setStyleSheet("QLabel{color: rgb(255, 147, 38)}")
         self.home_form.lat_value_label.setText(str(self.lat_value))
         self.home_form.lat_value_label.setFont(font)
-        self.home_form.lat_value_label.setStyleSheet("QLabel{color: rgb(238, 154, 0)}")
+        self.home_form.lat_value_label.setStyleSheet("QLabel{color: rgb(255, 147, 38)}")
         self.home_form.speed_value_label.setText(str(self.speed_value)) 
         self.home_form.speed_value_label.setFont(font)
-        self.home_form.speed_value_label.setStyleSheet("QLabel{color: rgb(107, 142, 35)}")
+        self.home_form.speed_value_label.setStyleSheet("QLabel{color: rgb(255, 147, 38)}")
         self.home_form.direct_value_label.setText(str(self.direct_value))
         self.home_form.direct_value_label.setFont(font)
-        self.home_form.direct_value_label.setStyleSheet("QLabel{color: rgb(189, 183, 107)}")
+        self.home_form.direct_value_label.setStyleSheet("QLabel{color: rgb(255, 147, 38)}")
         
     def connect_process_bar(self, flag):
         """连接服务器进度动画"""

@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
         self.toolBar = QToolBar(MainWindow)
         self.toolBar.setObjectName(u"toolBar")
         self.toolBar.setFont(font)
-        self.toolBar.setStyleSheet(u"background-color: rgb(48, 48, 85);\n"
+        self.toolBar.setStyleSheet(u"background-color: rgb(4,108,149);\n"
 "color: rgb(255, 255, 255);\n"
 "font: 12pt \"Microsoft YaHei UI\";")
         self.toolBar.setMovable(False)

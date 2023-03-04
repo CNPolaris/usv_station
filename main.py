@@ -38,7 +38,7 @@ class Window(QMainWindow):
         self.home_action = QAction('首页', self)  # 0
         self.video_action = QAction('监控', self)  # 1
         self.setting_action = QAction('配置', self)  # 2
-
+        
         # 工具栏动作绑定
         self.home_action.triggered.connect(self.change_qls_to_home)  # 默认首页
         self.video_action.triggered.connect(self.change_qls_to_video)
@@ -85,7 +85,7 @@ def win():
     w.setWindowTitle("USV地面站软件v0.1")
     w.setWindowIcon(QIcon(config.get_icon_abs_path()))
     # 背景色
-    w.setStyleSheet("QMainWindow{background-color: rgb(72, 61, 139)} QLabel{color: rgb(255, 255, 255)} QDialog{background-color: rgb(214, 77, 84)}")
+    w.setStyleSheet("QMainWindow{background-color: rgb(4,108,149)} QLabel{color: rgb(255, 255, 255)} QDialog{background-color: rgb(214, 77, 84)}")
     w.show()
     
     sys.exit(app.exec())
