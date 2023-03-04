@@ -98,7 +98,7 @@ class Config(object):
     
     def get_icon_abs_path(self):
         """icon"""
-        return (self.project_path + f"static{os.sep}img{os.sep}logo.ico").replace(os.sep, "/")  
+        return (self.project_path + f"static{os.sep}img{os.sep}yuanli.png").replace(os.sep, "/")  
     
     @staticmethod
     def get_tcp_server_ip() -> str:

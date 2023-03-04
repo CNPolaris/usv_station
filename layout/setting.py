@@ -6,6 +6,7 @@
 ################################################################################
 import os
 from PySide6.QtWidgets import QWidget
+from PySide6.QtGui import QIcon
 
 from ui.ui_setting import Ui_SettingForm
 from utils.config import config
@@ -16,6 +17,7 @@ class SettingWidget(QWidget):
     super().__init__()
     self.setting_form = Ui_SettingForm()
     self.setting_form.setupUi(self)
+    self.setWindowIcon(QIcon(config.get_icon_abs_path()))
     self.setWindowTitle("系统配置")
     self.load_setting_cfg()
     # 配置信息复选框选中事件绑定
