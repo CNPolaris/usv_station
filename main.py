@@ -18,7 +18,8 @@ from layout.setting import SettingWidget
 from threads.command_thread import CommandThread
 from utils.config import config
 class Window(QMainWindow):
-
+    sys_exit_signal = QtCore.Signal(bool)
+    
     def __init__(self):
         super().__init__()
         # 主窗口载入
@@ -45,6 +46,8 @@ class Window(QMainWindow):
         self.tb.addAction(self.home_action)
         self.tb.addAction(self.video_action)
         self.tb.addAction(self.setting_action)
+        # 信号量绑定
+        self.sys_exit_signal.connect(self.home_.when_sys_exit)
         
     def change_qls_to_home(self):
         """
@@ -71,6 +74,7 @@ class Window(QMainWindow):
         reply = QMessageBox.warning(self, '警告', "系统将退出，是否确认?", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply == QMessageBox.Yes:
             event.accept()
+            self.sys_exit_signal.emit(True)
         else:
             event.ignore()
 

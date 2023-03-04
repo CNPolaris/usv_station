@@ -249,8 +249,18 @@ class HomeWidget(QWidget):
             self.connect_process_widget.close()
             reply = QMessageBox.warning(self, "服务连接", "连接失败", QMessageBox.Yes)
             self.server_switch_btn.state = False
-            self.command_thread.quit()
-            
+            self.command_thread.destroy()
+            self.station_thread.destroy()
+    
+    def when_sys_exit(self, flag):
+        """系统退出时 关闭线程"""
+        if flag:
+            try:
+                self.command_thread.destroy()
+                self.station_thread.destroy()
+            except:
+                pass
+    
     def add_ship_marker_in_map(self, info):
         """add_ship_marker_in_map 在地图上添加船体标注
 

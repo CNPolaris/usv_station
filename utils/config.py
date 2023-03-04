@@ -13,7 +13,7 @@ __author__ = "tian.xin"
 import os
 import operator
 from configparser import RawConfigParser
-from logger import logger
+from utils.logger import logger
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__)).split('utils')[0]
 
