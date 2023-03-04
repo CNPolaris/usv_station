@@ -157,7 +157,7 @@ class PostPlane(QWidget):
     painter.setPen(Qt.PenStyle.NoPen)
     pen = QPen()
     pen.setColor(self.HandleColor)
-    pen.setWidth(2)
+    pen.setWidth(3)
     painter.setPen(pen)
     painter.drawLine(radius * 2, 0, radius * 3.5, 0)
     painter.drawLine(-radius * 2, 0, -radius * 3.5, 0)
