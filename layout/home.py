@@ -23,6 +23,7 @@ from components.PercentProgressBar import PercentProgressBar
 from components.SpeedProgressBar import SpeedProgressBar
 from components.PostPlane import PostPlane
 from components.SwitchButton import SwitchButton
+from components.LightTipBar import LightTipBar
 
 
 showMessage = QMessageBox.question
@@ -143,6 +144,14 @@ class HomeWidget(QWidget):
         self.server_switch_btn.setMinimumSize(70, 30)
         self.server_switch_btn.setMaximumSize(70, 30)
         self.server_switch_btn.toggled.connect(self.on_server_switch_btn_click)
+        
+        self.sideLight = LightTipBar()          # 车舵操作模拟指示灯
+        self.sideLight.setMinimumSize(25, 25)
+        self.sideLight.setMaximumSize(25, 25)
+        self.differenceLight = LightTipBar()    # 差分开关状态指示灯
+        self.differenceLight.setMinimumSize(25, 25)
+        self.differenceLight.setMaximumSize(25, 25)
+        
         self.init_control_btn_layout()
         ############################
         # 连接tcp服务器设置
@@ -177,6 +186,8 @@ class HomeWidget(QWidget):
     def init_control_btn_layout(self):
         """初始化控制按钮组
         """
+        control_vLayout = QVBoxLayout()
+        # 服务器连接开关模块
         btn_layout = QHBoxLayout()
         btn_label = QLabel("服务器连接")
         font = QFont()
@@ -184,7 +195,23 @@ class HomeWidget(QWidget):
         btn_label.setFont(font)
         btn_layout.addWidget(btn_label)
         btn_layout.addWidget(self.server_switch_btn)
-        self.home_form.control_btn_widget.setLayout(btn_layout)
+        control_vLayout.addLayout(btn_layout)
+        # 状态灯模块
+        side_layout = QHBoxLayout()
+        side_light_label = QLabel("车舵模拟状态灯")
+        side_light_label.setFont(font)
+        
+        side_layout.addWidget(side_light_label)
+        side_layout.addWidget(self.sideLight)
+        control_vLayout.addLayout(side_layout)
+        
+        diff_layout = QHBoxLayout()
+        diff_light_label = QLabel("差分开关状态灯")
+        diff_light_label.setFont(font)
+        diff_layout.addWidget(diff_light_label)
+        diff_layout.addWidget(self.differenceLight)
+        control_vLayout.addLayout(diff_layout)
+        self.home_form.control_btn_widget.setLayout(control_vLayout)
 
     def on_server_switch_btn_click(self, toggle):
         """服务器连接切换按钮
