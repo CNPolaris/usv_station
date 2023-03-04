@@ -12,12 +12,12 @@ class PostPlane(QWidget):
   BorderInColorStart = QColor(131, 139, 131)   # 内边框渐变开始颜色
   BorderInColorEnd = QColor(131, 139, 131)     # 内边框渐变结束颜色
   
-  BackColor = QColor(135, 206, 250)   # 背景颜色
-  PlaneColor = QColor(32, 178, 170)   # 姿态仪背景颜色
+  BackColor = QColor(179,224,238)     # 背景颜色
+  PlaneColor = QColor(72,181,214)     # 姿态仪背景颜色
   ScaleColor = QColor(255, 255, 255)  # 刻度尺颜色
   LineColor = QColor(0, 0, 128)       # 线条颜色
   TextColor = QColor(224, 255, 255)   # 文字颜色
-  PointerColor = QColor(255, 106, 106) # 指针颜色
+  PointerColor = QColor(255, 106, 106)# 指针颜色
   HandleColor = QColor(255, 193, 37)  # 手柄颜色
   
   DegValue = 0    # 旋转角度
