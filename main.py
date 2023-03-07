@@ -77,7 +77,22 @@ class Window(QMainWindow):
             self.sys_exit_signal.emit(True)
         else:
             event.ignore()
+            
+    def changeEvent(self, event) -> None:
+        if event.type() == QtCore.QEvent.WindowStateChange:
+            if not self.isMaximized():
+                self.home_.plane.setMaximumSize(80, 80)
+                self.home_.plane.setMinimumSize(80, 80)
+                self.home_.speed_bar.setMaximumSize(80, 80)
+                self.home_.speed_bar.setMinimumSize(80, 80)
 
+                print("ff")
+            elif self.isMaximized():
+                self.home_.plane.setMaximumSize(180, 180)
+                self.home_.plane.setMinimumSize(180, 180)
+                self.home_.speed_bar.setMaximumSize(180, 180)
+                self.home_.speed_bar.setMinimumSize(180, 180)
+                
 def win():
     app = QApplication(sys.argv)
 
@@ -86,8 +101,7 @@ def win():
     w.setWindowIcon(QIcon(config.get_icon_abs_path()))
     # 背景色
     w.setStyleSheet("QMainWindow{background-color: rgb(4,108,149)} QLabel{color: rgb(255, 255, 255)} QDialog{background-color: rgb(214, 77, 84)}")
-    w.show()
-    
+    w.showMaximized()    
     sys.exit(app.exec())
 
 
