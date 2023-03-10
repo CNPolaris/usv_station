@@ -22,9 +22,9 @@ log_colors_config = {
 
 default_formats = {
     # 终端输出格式
-    'color_format': '%(log_color)s%(asctime)s-%(name)s-%(filename)s-[line:%(lineno)d]-%(levelname)s-[日志信息]: %(message)s',
+    'color_format': '%(log_color)s%(asctime)s-%(levelname)s: %(message)s',
     # 日志输出格式
-    'log_format': '%(asctime)s-%(name)s-%(filename)s-[line:%(lineno)d]-%(levelname)s-[日志信息]: %(message)s'
+    'log_format': '%(asctime)s-%(levelname)s: %(message)s'
 }
 
 

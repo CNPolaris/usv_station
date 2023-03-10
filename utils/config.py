@@ -123,7 +123,7 @@ class Config(object):
         _type_
             _description_
         """
-        monitor_url = config.get_config_data("monitor_url", section="system-config")
+        monitor_url = config.get_config_data("monitor_url", section="system-config") + config.get_config_data("monitor_key", section="device")
         return monitor_url
     
     @staticmethod

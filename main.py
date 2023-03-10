@@ -28,10 +28,10 @@ class Window(QMainWindow):
         # 添加堆叠布局
         self._qsl = QStackedLayout(self.main_ui.MainWidget)
         self.home_ = HomeWidget()
-        self.video_ = VideoWidget()
+        self.monitor_widget = VideoWidget()
         self.setting_widget = SettingWidget()
         self._qsl.addWidget(self.home_)
-        self._qsl.addWidget(self.video_)
+        # self._qsl.addWidget(self.video_)
         # self._qsl.addWidget(self.setting_widget)
         # 工具栏
         self.tb = self.main_ui.toolBar
@@ -48,6 +48,7 @@ class Window(QMainWindow):
         self.tb.addAction(self.setting_action)
         # 信号量绑定
         self.sys_exit_signal.connect(self.home_.when_sys_exit)
+        self.sys_exit_signal.connect(self.monitor_widget.when_sys_exit)
         
     def change_qls_to_home(self):
         """
@@ -61,8 +62,9 @@ class Window(QMainWindow):
         切换监控
         :return:
         """
-        self._qsl.setCurrentIndex(1)
-        self.video_.when_no_video()
+        # self._qsl.setCurrentIndex(1)
+        self.monitor_widget.when_no_video()
+        self.monitor_widget.show()
 
     def change_qls_to_setting(self):
         """change_qls_to_setting 打开软件配置子窗体
