@@ -7,15 +7,13 @@
 import sys
 
 from PySide6 import QtCore
-from PySide6.QtGui import QAction, QCloseEvent, QIcon, QPixmap, QFont
-from PySide6.QtWebChannel import QWebChannel
-from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QStackedLayout, QPushButton, QMessageBox
+from PySide6.QtGui import QAction, QCloseEvent, QIcon
+from PySide6.QtWidgets import QMainWindow, QApplication, QStackedLayout, QMessageBox
 
 from ui.ui_main import Ui_MainWindow
 from layout.home import HomeWidget
 from layout.video import VideoWidget
 from layout.setting import SettingWidget
-from threads.command_thread import CommandThread
 from utils.config import config
 class Window(QMainWindow):
     sys_exit_signal = QtCore.Signal(bool)
@@ -27,10 +25,10 @@ class Window(QMainWindow):
         self.main_ui.setupUi(self)
         # 添加堆叠布局
         self._qsl = QStackedLayout(self.main_ui.MainWidget)
-        self.home_ = HomeWidget()
+        self.home_widget = HomeWidget()
         self.monitor_widget = VideoWidget()
         self.setting_widget = SettingWidget()
-        self._qsl.addWidget(self.home_)
+        self._qsl.addWidget(self.home_widget)
         # self._qsl.addWidget(self.video_)
         # self._qsl.addWidget(self.setting_widget)
         # 工具栏
@@ -47,7 +45,7 @@ class Window(QMainWindow):
         self.tb.addAction(self.video_action)
         self.tb.addAction(self.setting_action)
         # 信号量绑定
-        self.sys_exit_signal.connect(self.home_.when_sys_exit)
+        self.sys_exit_signal.connect(self.home_widget.when_sys_exit)
         self.sys_exit_signal.connect(self.monitor_widget.when_sys_exit)
         
     def change_qls_to_home(self):
@@ -83,17 +81,15 @@ class Window(QMainWindow):
     def changeEvent(self, event) -> None:
         if event.type() == QtCore.QEvent.WindowStateChange:
             if not self.isMaximized():
-                self.home_.plane.setMaximumSize(80, 80)
-                self.home_.plane.setMinimumSize(80, 80)
-                self.home_.speed_bar.setMaximumSize(80, 80)
-                self.home_.speed_bar.setMinimumSize(80, 80)
-
-                print("ff")
+                self.home_widget.plane.setMaximumSize(80, 80)
+                self.home_widget.plane.setMinimumSize(80, 80)
+                self.home_widget.speed_bar.setMaximumSize(80, 80)
+                self.home_widget.speed_bar.setMinimumSize(80, 80)
             elif self.isMaximized():
-                self.home_.plane.setMaximumSize(180, 180)
-                self.home_.plane.setMinimumSize(180, 180)
-                self.home_.speed_bar.setMaximumSize(180, 180)
-                self.home_.speed_bar.setMinimumSize(180, 180)
+                self.home_widget.plane.setMaximumSize(180, 180)
+                self.home_widget.plane.setMinimumSize(180, 180)
+                self.home_widget.speed_bar.setMaximumSize(180, 180)
+                self.home_widget.speed_bar.setMinimumSize(180, 180)
                 
 def win():
     app = QApplication(sys.argv)

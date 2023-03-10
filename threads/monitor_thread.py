@@ -26,6 +26,5 @@ class MonitorThread(QThread):
         self.send_img_data.emit(frame)
         
   def destroy(self):
-    print("线程终止")
     self.quit()
     self.wait()
